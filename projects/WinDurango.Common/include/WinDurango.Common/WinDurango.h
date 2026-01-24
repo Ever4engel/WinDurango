@@ -13,7 +13,11 @@ namespace wd::common {
 
         WinDurango() = default;
 
+        void Init();
+
 		Config Config;
+    private:
+        bool _inited = false;
     };
 }
 
