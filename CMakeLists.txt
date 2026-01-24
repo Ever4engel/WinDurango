@@ -4,9 +4,11 @@ project(WinDurango)
 set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(projects/WinDurango.Common)
+add_subdirectory(projects/WinDurango.WinRT)
 add_subdirectory(projects/WinDurango.Kernel)
 
 add_custom_target(WinDurango ALL DEPENDS
     WinDurango.Common
+    WinDurango.WinRT
     WinDurango.Kernel
 )
