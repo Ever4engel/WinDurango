@@ -11,7 +11,7 @@ namespace wd::common {
     public:
         static WinDurango *GetInstance();
 
-        WinDurango();
+        WinDurango() = default;
 
 		Config Config;
     };

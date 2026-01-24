@@ -5,12 +5,8 @@
 
 namespace wd::common {
     WinDurango *WinDurango::GetInstance() {
-        static WinDurango Instance = WinDurango();
+        static WinDurango Instance = WinDurango(); // if we don't declare it in src, it will make multiple instances per header import in different libs afaik
 
         return &Instance;
-    }
-
-    WinDurango::WinDurango() {
-        this->_config = Config();
     }
 }
