@@ -18,6 +18,12 @@ target_include_directories(WinDurango.WinRT PUBLIC
 
 target_link_libraries(WinDurango.WinRT PUBLIC WinDurango.Common)
 
+set_target_properties(WinDurango.WinRT PROPERTIES
+        VS_WINRT_COMPONENT TRUE
+        VS_GLOBAL_ROOTNAMESPACE "WinDurango.WinRT"
+        OUTPUT_NAME "WinDurango.WinRT"
+)
+
 target_compile_definitions(WinDurango.WinRT PUBLIC
         WINDURANGO_WINRT_COMPILER_NAME="${CMAKE_CXX_COMPILER_ID}"
         WINDURANGO_WINRT_PLATFORM_NAME="${CMAKE_SYSTEM_NAME}"
