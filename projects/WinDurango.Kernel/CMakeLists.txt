@@ -14,7 +14,7 @@ target_include_directories(WinDurango.Kernel PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
-target_link_libraries(WinDurango.Kernel PUBLIC WinDurango.Common)
+target_link_libraries(WinDurango.Kernel PUBLIC WinDurango.Common WinDurango.WinRT)
 
 target_compile_definitions(WinDurango.Kernel PUBLIC
         WINDURANGO_KERNEL_COMPILER_NAME="${CMAKE_CXX_COMPILER_ID}"
