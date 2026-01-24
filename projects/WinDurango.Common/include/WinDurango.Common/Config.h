@@ -1,15 +1,23 @@
-//
-// Created by DexrnZacAttack on 1/23/26 using zPc-i2.
-//
-#ifndef WINDURANGO_CONFIG_H
-#define WINDURANGO_CONFIG_H
+/*
+ * Created by DexrnZacAttack on 1/23/26 using zPc-i2.
+ * WinDurango.Common::Config
+*/
+#pragma once
+#include <string>
+#include <fstream>
+#include <nlohmann/json.hpp>
 
-namespace wd::common
-{
-    class Config
-    {
-        // todo for later since I don't want to deal with fileio atm
+namespace wd::common {
+    class Config {
+    public:
+        Config();
+        Config(std::string file, bool ReadOnly = false);
+
+        /*
+         * Operator Overloading
+         * https://en.cppreference.com/w/cpp/language/operators.html
+        */
+        template<typename T>
+        T& operator[](std::string node);
     };
-} // namespace wd::common
-
-#endif // WINDURANGO_CONFIG_H
+}

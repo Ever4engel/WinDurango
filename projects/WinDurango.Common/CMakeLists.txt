@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 4.0)
 project(WinDurango.Common VERSION 1.0.0)
 
+include(FetchContent)
+
 set(VERSION_SUFFIX "-dev.4") # used for non-stable versions, otherwise blank
 
 set(CMAKE_CXX_STANDARD 17)
@@ -11,10 +13,15 @@ set(FILES
         include/WinDurango.Common/Config.h
 )
 
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
+FetchContent_MakeAvailable(json)
+
 add_library(WinDurango.Common SHARED ${FILES})
 target_include_directories(WinDurango.Common PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
+
+target_link_libraries(WinDurango.Common PUBLIC nlohmann_json::nlohmann_json)
 
 target_compile_definitions(WinDurango.Common PUBLIC
         WINDURANGO_COMMON_COMPILER_NAME="${CMAKE_CXX_COMPILER_ID}"
