@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.0)
 project(WinDurango.Common VERSION 1.0.0)
 
-set(VERSION_SUFFIX "-dev.4") # used for non-stable versions, otherwise blank
+set(VERSION_SUFFIX "-dev.5") # used for non-stable versions, otherwise blank
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -9,6 +9,7 @@ set(FILES
         include/WinDurango.Common/WinDurango.h
         src/WinDurango.cpp
         include/WinDurango.Common/Config.h
+        include/WinDurango.Common/Interfaces/Storage/Directory.h
 )
 
 add_library(WinDurango.Common SHARED ${FILES})
