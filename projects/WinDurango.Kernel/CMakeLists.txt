@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.0)
 project(WinDurango.Kernel VERSION 1.0.0)
 
-set(VERSION_SUFFIX "-dev.0") # used for non-stable versions, otherwise blank
+set(VERSION_SUFFIX "-dev.1") # used for non-stable versions, otherwise blank
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -25,3 +25,4 @@ target_compile_definitions(WinDurango.Kernel PUBLIC
 )
 
 set_target_properties(WinDurango.Kernel PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(WinDurango.Kernel PROPERTIES LIBRARY_OUTPUT_NAME "kernelx")
