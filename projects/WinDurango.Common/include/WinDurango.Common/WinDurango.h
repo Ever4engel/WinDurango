@@ -13,9 +13,7 @@ namespace wd::common {
 
         WinDurango();
 
-		Config &GetConfig();
-	private:
-		Config _config;
+		Config Config;
     };
 }
 
