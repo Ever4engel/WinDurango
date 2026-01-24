@@ -6,19 +6,22 @@
 
 #include "WinDurango.Common/Config.h"
 
-namespace wd::common {
-    class WinDurango {
-    public:
+namespace wd::common
+{
+    class WinDurango
+    {
+      public:
         static WinDurango *GetInstance();
 
         WinDurango() = default;
 
         void Init();
 
-		Config Config;
-    private:
+        Config Config;
+
+      private:
         bool _inited = false;
     };
-}
+} // namespace wd::common
 
 #endif // WINDURANGO_COMMON_H
