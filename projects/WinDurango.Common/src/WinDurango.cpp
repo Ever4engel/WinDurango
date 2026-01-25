@@ -1,7 +1,7 @@
 //
 // Created by DexrnZacAttack on 1/23/26 using zPc-i2.
 //
-#include "WinDurango.Common/WinDurango.h"
+#include "WinDurango.h"
 
 namespace wd::common
 {

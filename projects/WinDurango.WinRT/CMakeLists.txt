@@ -14,6 +14,7 @@ set(WINRT_USE_CROSS_PLATFORM OFF)
 add_library(WinDurango.WinRT SHARED ${FILES})
 target_include_directories(WinDurango.WinRT PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    ../WinDurango.Common/include/WinDurango.Common/
 )
 
 target_link_libraries(WinDurango.WinRT PUBLIC WinDurango.Common)

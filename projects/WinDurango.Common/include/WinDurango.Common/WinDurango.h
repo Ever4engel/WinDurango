@@ -3,13 +3,8 @@
 //
 #pragma once
 
-#ifdef WD_API_EXPORTS
-  #define WD_API __declspec(dllexport)
-#else
-  #define WD_API __declspec(dllimport)
-#endif
-
 #include "Config.h"
+#include "exports.h"
 
 namespace wd::common
 {

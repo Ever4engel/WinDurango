@@ -4,13 +4,12 @@
 #pragma once
 #include <istream>
 #include <filesystem>
-#include "../WinDurango.h"
 
 namespace wd::common::interfaces::storage {
     // TODO should we have separate project for interfaces?
 
     /** Interface for storage management, to be impl'd for uwp and crossplat */
-    class WD_API File {
+    class File {
     public:
         File() {}
 
