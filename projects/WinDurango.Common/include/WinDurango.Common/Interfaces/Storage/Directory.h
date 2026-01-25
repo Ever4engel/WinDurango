@@ -4,6 +4,7 @@
 #pragma once
 #include <filesystem>
 #include "File.h"
+#include "../WinDurango.h"
 
 namespace wd::common::interfaces::storage {
     // TODO should we have separate project for interfaces?
@@ -14,7 +15,7 @@ namespace wd::common::interfaces::storage {
      * We don't need any args for the constructor
      * nor any vars bc this is an abstraction.
      */
-    class Directory {
+    class WD_API Directory {
     public:
         Directory() {}
 

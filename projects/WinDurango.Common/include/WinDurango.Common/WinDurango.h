@@ -1,27 +1,31 @@
 //
 // Created by DexrnZacAttack on 1/23/26 using zPc-i2.
 //
-#ifndef WINDURANGO_COMMON_H
-#define WINDURANGO_COMMON_H
+#pragma once
 
-#include "WinDurango.Common/Config.h"
+#ifdef WD_API_EXPORTS
+  #define WD_API __declspec(dllexport)
+#else
+  #define WD_API __declspec(dllimport)
+#endif
+
+#include "Config.h"
 
 namespace wd::common
 {
-    class WinDurango
-    {
-      public:
-        static WinDurango *GetInstance();
+  class WD_API WinDurango
+  {
+    public:
+      static WinDurango *GetInstance();
 
-        WinDurango() = default;
+      WinDurango() = default;
 
-        void Init();
+      void Init();
 
-        Config Config;
+      Config Config;
 
-      private:
-        bool _inited = false;
-    };
+    private:
+      bool _inited = false;
+  };
 } // namespace wd::common
 
-#endif // WINDURANGO_COMMON_H

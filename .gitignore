@@ -9,11 +9,16 @@ cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
+Generated Files
+Packages
 _deps
 CMakeUserPresets.json
 *.slnx
 *.vcxproj
 *.vcxproj.filters
-*.Common.dir
+*.dir
+!projects/WinDurango.Testing/WinDurango.Testing.slnx
+!projects/WinDurango.Testing/WinDurango.Testing.vcxproj
 ALL_BUILD.dir
+ZERO_CHECK.dir
 .vscode

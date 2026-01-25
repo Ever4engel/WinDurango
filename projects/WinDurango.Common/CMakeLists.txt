@@ -1,15 +1,21 @@
 cmake_minimum_required(VERSION 4.0)
 project(WinDurango.Common VERSION 1.0.0)
 
-set(VERSION_SUFFIX "-dev.5") # used for non-stable versions, otherwise blank
+include(FetchContent)
 
-set(CMAKE_CXX_STANDARD 17)
+set(VERSION_SUFFIX "-dev.5") # used for non-stable versions, otherwise blank
+set(CMAKE_CXX_STANDARD 20)
+
+add_compile_definitions(WD_API_EXPORTS)
 
 set(FILES
         include/WinDurango.Common/WinDurango.h
         src/WinDurango.cpp
+
         include/WinDurango.Common/Config.h
+        include/WinDurango.Common/Logging.h
         include/WinDurango.Common/Interfaces/Storage/Directory.h
+        include/WinDurango.Common/Interfaces/Storage/File.h
 )
 
 FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
