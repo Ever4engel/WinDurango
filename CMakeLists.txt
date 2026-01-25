@@ -3,8 +3,6 @@ project(WinDurango)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include(ExternalProject)
-
 add_subdirectory(projects/WinDurango.Common)
 add_subdirectory(projects/WinDurango.Implementation.WinRT)
 add_subdirectory(projects/WinDurango.WinRT)
