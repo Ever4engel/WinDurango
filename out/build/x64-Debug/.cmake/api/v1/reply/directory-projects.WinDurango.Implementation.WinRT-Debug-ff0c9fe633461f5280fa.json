@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "projects/WinDurango.Implementation.WinRT",
+		"source" : "projects/WinDurango.Implementation.WinRT"
+	}
+}

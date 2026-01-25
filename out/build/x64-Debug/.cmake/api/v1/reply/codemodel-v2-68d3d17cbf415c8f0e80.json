@@ -1,0 +1,276 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						3,
+						4,
+						5,
+						6,
+						7
+					],
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "4.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "projects/WinDurango.Common",
+					"childIndexes" : 
+					[
+						2
+					],
+					"jsonFile" : "directory-projects.WinDurango.Common-Debug-0f7b722c332ee4a42ba5.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "4.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "projects/WinDurango.Common",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "_deps/json-build",
+					"jsonFile" : "directory-_deps.json-build-Debug-22ac37aaee65079284db.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "out/build/x64-Debug/_deps/json-src"
+				},
+				{
+					"build" : "projects/WinDurango.Implementation.WinRT",
+					"jsonFile" : "directory-projects.WinDurango.Implementation.WinRT-Debug-ff0c9fe633461f5280fa.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "4.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 3,
+					"source" : "projects/WinDurango.Implementation.WinRT",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "projects/WinDurango.WinRT",
+					"jsonFile" : "directory-projects.WinDurango.WinRT-Debug-250ac47eae54aea70d39.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "4.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "projects/WinDurango.WinRT",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "etwplus",
+					"jsonFile" : "directory-etwplus-Debug-61055710974904d7e893.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "4.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "etwplus",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "kernelx",
+					"jsonFile" : "directory-kernelx-Debug-1ab2f9f40f4d1d165202.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "4.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "kernelx",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "d3d11.x",
+					"jsonFile" : "directory-d3d11.x-Debug-70d84b0307a7460d26b6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "4.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "d3d11.x",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						3,
+						4
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						5,
+						6,
+						7
+					],
+					"name" : "WinDurango",
+					"targetIndexes" : 
+					[
+						0,
+						4,
+						5,
+						6
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						2
+					],
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "WinDurango.Common",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "nlohmann_json",
+					"parentIndex" : 1
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "WinDurango.Implementation.WinRT",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "WinDurango.WinRT",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "WinDurango::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-WinDurango-Debug-ce43248c26becb9c876c.json",
+					"name" : "WinDurango",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "WinDurango.Common::@8b1614c16e9f61155cc5",
+					"jsonFile" : "target-WinDurango.Common-Debug-1c907b1833451c57a815.json",
+					"name" : "WinDurango.Common",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "WinDurango.Implementation.WinRT::@a709d3acf67cd3a3c422",
+					"jsonFile" : "target-WinDurango.Implementation.WinRT-Debug-872feefe31e086c152dd.json",
+					"name" : "WinDurango.Implementation.WinRT",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "WinDurango.WinRT::@45c147f30586ea4f43a2",
+					"jsonFile" : "target-WinDurango.WinRT-Debug-3f3b07318d5995aa3b5c.json",
+					"name" : "WinDurango.WinRT",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "d3d11_x::@4fa90ef760f3cfa7a424",
+					"jsonFile" : "target-d3d11_x-Debug-dd965d5872c3e8527f56.json",
+					"name" : "d3d11_x",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "etwplus::@2b25748f72f7aaa4dfc9",
+					"jsonFile" : "target-etwplus-Debug-7b88d190ab878f27fce7.json",
+					"name" : "etwplus",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "kernelx::@47a08a042e3f84c0ca17",
+					"jsonFile" : "target-kernelx-Debug-155dc72ad4c25d803cf7.json",
+					"name" : "kernelx",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/umidi/source/repos/WinDurango/out/build/x64-Debug",
+		"source" : "C:/Users/umidi/source/repos/WinDurango"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 8
+	}
+}

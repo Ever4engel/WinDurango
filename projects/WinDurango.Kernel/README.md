@@ -1,2 +1,0 @@
-# WinDurango.Kernel
-KernelX impl
