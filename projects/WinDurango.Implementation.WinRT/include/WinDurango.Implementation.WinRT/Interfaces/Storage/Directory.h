@@ -19,8 +19,8 @@ namespace wd::impl::winrt::interfaces::storage {
         WinRTDirectory(std::filesystem::path dirpath) : path(dirpath), dir(nullptr) {}
 
         virtual bool open() override;
-        virtual wd::common::interfaces::storage::File* CreateFile(std::filesystem::path path) override;
-        virtual wd::common::interfaces::storage::Directory* CreateFolder(std::filesystem::path path) override;
+        virtual std::shared_ptr<wd::common::interfaces::storage::File> CreateFile(std::filesystem::path path) override;
+        virtual std::shared_ptr<wd::common::interfaces::storage::Directory> CreateFolder(std::filesystem::path path) override;
 
         virtual std::filesystem::path dirpath() override;
         
