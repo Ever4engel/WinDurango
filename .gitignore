@@ -22,3 +22,9 @@ CMakeUserPresets.json
 ALL_BUILD.dir
 ZERO_CHECK.dir
 .vscode
+/.cmake
+/.vs
+/.vs
+/artifacts
+/cmake-build-debug
+/out

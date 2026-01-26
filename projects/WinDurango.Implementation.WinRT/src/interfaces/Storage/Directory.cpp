@@ -1,4 +1,4 @@
-#include "interfaces/Storage/Directory.h"
+#include "WinDurango.Implementation.WinRT/Interfaces/Storage/Directory.h"
 
 namespace wd::impl::winrt::interfaces::storage {
     bool WinRTDirectory::open() {

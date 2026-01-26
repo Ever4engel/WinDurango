@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.30)
 project(WinDurango.Implementation.WinRT VERSION 1.0.0)
 
 set(VERSION_SUFFIX "-dev.1") # used for non-stable versions, otherwise blank
@@ -15,8 +15,7 @@ add_compile_definitions(WDIMPL_API_EXPORTS)
 
 add_library(WinDurango.Implementation.WinRT SHARED ${FILES})
 target_include_directories(WinDurango.Implementation.WinRT PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/WinDurango.Implementation.WinRT/>
-        ../WinDurango.Common/include/
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
 )
 
 target_link_libraries(WinDurango.Implementation.WinRT PRIVATE WinDurango.Common)
@@ -30,3 +29,6 @@ target_compile_definitions(WinDurango.Implementation.WinRT PUBLIC
 )
 
 set_target_properties(WinDurango.Implementation.WinRT PROPERTIES LINKER_LANGUAGE CXX)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES VS_WINDOWS_TARGET_PLATFORM_MIN_VERSION 10.0.18362.0)
+target_compile_definitions(WinDurango.Implementation.WinRT PRIVATE _WINRT_DLL WIN32_LEAN_AND_MEAN WINRT_LEAN_AND_MEAN)

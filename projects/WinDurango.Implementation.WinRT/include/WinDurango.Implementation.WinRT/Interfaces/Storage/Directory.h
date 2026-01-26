@@ -1,5 +1,5 @@
 #pragma once
-#include "WinDurango.h"
+#include "WinDurango.Implementation.WinRT/WinDurangoWinRT.h"
 #include "WinDurango.Common/interfaces/Storage/Directory.h"
 
 /*
