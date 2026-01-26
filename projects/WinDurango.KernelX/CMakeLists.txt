@@ -16,7 +16,6 @@ target_link_libraries(WinDurango.KernelX PRIVATE WinDurango.Common)
 
 target_include_directories(WinDurango.KernelX PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/WinDurango.KernelX/
-    ../WinDurango.Common/include/
 )
 
 set_target_properties(WinDurango.KernelX PROPERTIES

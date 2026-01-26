@@ -1,8 +1,11 @@
 #include "pch.h"
+#include "WinDurango.Implementation.WinRT/Interfaces/Storage/Directory.h"
+#include <iostream>
 
 using namespace winrt;
 
 using namespace Windows;
+using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Core;
 using namespace Windows::Foundation::Numerics;
 using namespace Windows::UI;
@@ -15,6 +18,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     VisualCollection m_visuals{ nullptr };
     Visual m_selected{ nullptr };
     float2 m_offset{};
+    bool runFirst = true;
 
     IFrameworkView CreateView()
     {
@@ -87,6 +91,20 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         else
         {
             AddVisual(point);
+        }
+        if (runFirst)
+        {
+            Package pkg = Package::Current();
+            hstring id = pkg.Id().FamilyName();
+            std::wcout << L"Name: " << id.c_str() << L"\n";
+            wd::impl::winrt::interfaces::storage::WinRTDirectory dir("");
+            dir.open();
+            auto wddir = dir.CreateFolder("WinDurango");
+            wddir->open();
+            auto wdlog = wddir->CreateFile("log.txt");
+            wdlog->open();
+            (*wdlog) << std::string("Testing");
+            runFirst = false;
         }
     }
 
