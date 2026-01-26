@@ -13,9 +13,6 @@ Generated Files
 Packages
 _deps
 CMakeUserPresets.json
-*.slnx
-*.vcxproj
-*.vcxproj.filters
 *.dir
 !projects/WinDurango.Testing/WinDurango.Testing.slnx
 !projects/WinDurango.Testing/WinDurango.Testing.vcxproj

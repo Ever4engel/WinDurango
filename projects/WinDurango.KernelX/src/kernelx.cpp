@@ -1,5 +1,5 @@
-#include "WinDurango.Kernel/kernelx.h"
-#include "WinDurango.Kernel/Logan.h"
+#include "kernelx.h"
+#include "Logan.h"
 EXTERN_C CONSOLE_TYPE __stdcall GetConsoleType()
 {
     return CONSOLE_TYPE_XBOX_ONE;

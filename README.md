@@ -6,6 +6,7 @@
 ## Building
 To build run
 ```
+vcpkg install cppwinrt
 cmake -S . -B build
 cmake --build build
 ```

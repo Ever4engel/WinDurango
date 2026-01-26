@@ -92,3 +92,6 @@ set_target_properties(WinDurango.WinRT PROPERTIES LINKER_LANGUAGE CXX)
 #set_target_properties(${PROJECT_NAME} PROPERTIES VS_CPPWINRT true)
 set_target_properties(${PROJECT_NAME} PROPERTIES VS_WINDOWS_TARGET_PLATFORM_MIN_VERSION 10.0.18362.0)
 target_compile_definitions(WinDurango.WinRT PRIVATE _WINRT_DLL WIN32_LEAN_AND_MEAN WINRT_LEAN_AND_MEAN)
+set_target_properties(WinDurango.WinRT PROPERTIES
+    OUTPUT_NAME "winrt_x"
+)
