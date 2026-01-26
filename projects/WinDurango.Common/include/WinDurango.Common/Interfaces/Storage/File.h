@@ -15,7 +15,7 @@ namespace wd::common::interfaces::storage {
 
         virtual bool open() = 0;
         virtual bool create() = 0;
-        virtual std::istream& read() = 0;
+        virtual std::string read() = 0;
         virtual void operator<<(std::string data) = 0; // write
         virtual bool close() = 0;
 

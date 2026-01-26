@@ -1,17 +1,24 @@
 #pragma once
 #include <istream>
 #include <filesystem>
+#include <winrt/Windows.Storage.h>
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/base.h>
 #include "WinDurango.Implementation.WinRT/WinDurangoWinRT.h"
 #include "WinDurango.Common/Interfaces/Storage/File.h"
+
+using namespace winrt::Windows::Storage;
+using namespace winrt;
 
 namespace wd::impl::winrt::interfaces::storage {
     class WDIMPL_API WinRTFile : public wd::common::interfaces::storage::File {
     public:
-        WinRTFile(std::filesystem::path filepath) : path(filepath) {}
+        WinRTFile(std::filesystem::path filepath) : path(filepath), file(nullptr) {}
 
         virtual bool open() override;
         virtual bool create() override;
-        virtual std::istream& read() override;
+        virtual std::string read() override;
         virtual void operator<<(std::string data) override; // write
         virtual bool close() override;
 
@@ -23,5 +30,6 @@ namespace wd::impl::winrt::interfaces::storage {
         virtual bool copy(std::filesystem::path path) override;
     private:
         std::filesystem::path path;
+        StorageFile file;
     };
 }

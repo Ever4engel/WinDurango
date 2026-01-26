@@ -3,10 +3,12 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/base.h>
-#include "WinDurango.h"
+#include "WinDurango.Implementation.WinRT/WinDurangoWinRT.h"
 #include "WinDurango.Common/interfaces/Storage/Directory.h"
+#include "WinDurango.Implementation.WinRT/Interfaces/Storage/File.h"
 
 using namespace winrt::Windows::Storage;
+using namespace winrt;
 
 /*
  * I wonder if this is too confusing?
@@ -14,11 +16,11 @@ using namespace winrt::Windows::Storage;
 namespace wd::impl::winrt::interfaces::storage {
     class WDIMPL_API WinRTDirectory : public wd::common::interfaces::storage::Directory {
     public:
-        WinRTDirectory(std::filesystem::path dirpath) : path(dirpath) {}
+        WinRTDirectory(std::filesystem::path dirpath) : path(dirpath), dir(nullptr) {}
 
         virtual bool open() override;
         virtual wd::common::interfaces::storage::File* CreateFile(std::filesystem::path path) override;
-        virtual wd::common::interfaces::storage::Directory* CreateDirectory(std::filesystem::path path) override;
+        virtual wd::common::interfaces::storage::Directory* CreateFolder(std::filesystem::path path) override;
 
         virtual std::filesystem::path dirpath() override;
         
@@ -28,6 +30,6 @@ namespace wd::impl::winrt::interfaces::storage {
         virtual bool copy(std::filesystem::path path) override;
     private:
         std::filesystem::path path;
-        StorageFolder* dir = nullptr;
+        StorageFolder dir;
     };
 }

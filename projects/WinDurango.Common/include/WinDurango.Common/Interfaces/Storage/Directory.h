@@ -20,7 +20,7 @@ namespace wd::common::interfaces::storage {
 
         virtual bool open() = 0;
         virtual File* CreateFile(std::filesystem::path path) = 0; // todo maybe return stream type, todo can we use this in uwp context??? I forgor
-        virtual Directory* CreateDirectory(std::filesystem::path path) = 0;
+        virtual Directory* CreateFolder(std::filesystem::path path) = 0;
 
         virtual std::filesystem::path dirpath() = 0;
         
