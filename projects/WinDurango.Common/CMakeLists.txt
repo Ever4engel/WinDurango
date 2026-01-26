@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.30)
 project(WinDurango.Common VERSION 1.0.0)
 
 include(FetchContent)
@@ -23,7 +23,7 @@ FetchContent_MakeAvailable(json)
 
 add_library(WinDurango.Common SHARED ${FILES})
 target_include_directories(WinDurango.Common PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/WinDurango.Common/>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
 )
 
 target_link_libraries(WinDurango.Common PUBLIC nlohmann_json::nlohmann_json)

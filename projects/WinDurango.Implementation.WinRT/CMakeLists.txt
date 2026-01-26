@@ -1,8 +1,10 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.30)
 project(WinDurango.Implementation.WinRT VERSION 1.0.0)
 
 set(VERSION_SUFFIX "-dev.1") # used for non-stable versions, otherwise blank
 set(CMAKE_CXX_STANDARD 20)
+
+find_package(cppwinrt CONFIG REQUIRED)
 
 set(FILES
     include/WinDurango.Implementation.WinRT/Interfaces/Storage/Directory.h
@@ -15,11 +17,19 @@ add_compile_definitions(WDIMPL_API_EXPORTS)
 
 add_library(WinDurango.Implementation.WinRT SHARED ${FILES})
 target_include_directories(WinDurango.Implementation.WinRT PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/WinDurango.Implementation.WinRT/>
-        ../WinDurango.Common/include/
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
 )
 
-target_link_libraries(WinDurango.Implementation.WinRT PRIVATE WinDurango.Common)
+set_property(
+  TARGET WinDurango.Implementation.WinRT
+  PROPERTY VS_PACKAGE_REFERENCES
+  "Microsoft.Windows.CppWinRT_2.0.230706.1"
+  "Microsoft.WindowsAppSDK_1.4.231115000"
+  "Microsoft.Windows.SDK.BuildTools_10.0.22621.756"
+  "Microsoft.Windows.ImplementationLibrary_1.0.230629.1"
+)
+
+target_link_libraries(WinDurango.Implementation.WinRT PRIVATE WinDurango.Common Microsoft::CppWinRT)
 
 target_compile_definitions(WinDurango.Implementation.WinRT PUBLIC
         WINDURANGO_IMPLEMENTATION_WINRT_COMPILER_NAME="${CMAKE_CXX_COMPILER_ID}"
@@ -30,3 +40,6 @@ target_compile_definitions(WinDurango.Implementation.WinRT PUBLIC
 )
 
 set_target_properties(WinDurango.Implementation.WinRT PROPERTIES LINKER_LANGUAGE CXX)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES VS_WINDOWS_TARGET_PLATFORM_MIN_VERSION 10.0.18362.0)
+target_compile_definitions(WinDurango.Implementation.WinRT PRIVATE _WINRT_DLL WIN32_LEAN_AND_MEAN WINRT_LEAN_AND_MEAN)

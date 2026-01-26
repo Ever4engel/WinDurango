@@ -1,6 +1,12 @@
 #pragma once
+#include <winrt/Windows.Storage.h>
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/base.h>
 #include "WinDurango.h"
 #include "WinDurango.Common/interfaces/Storage/Directory.h"
+
+using namespace winrt::Windows::Storage;
 
 /*
  * I wonder if this is too confusing?
@@ -22,5 +28,6 @@ namespace wd::impl::winrt::interfaces::storage {
         virtual bool copy(std::filesystem::path path) override;
     private:
         std::filesystem::path path;
+        StorageFolder* dir = nullptr;
     };
 }

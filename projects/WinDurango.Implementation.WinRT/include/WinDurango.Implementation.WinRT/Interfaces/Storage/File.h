@@ -1,7 +1,7 @@
 #pragma once
 #include <istream>
 #include <filesystem>
-#include "WinDurango.h"
+#include "WinDurango.Implementation.WinRT/WinDurangoWinRT.h"
 #include "WinDurango.Common/Interfaces/Storage/File.h"
 
 namespace wd::impl::winrt::interfaces::storage {
