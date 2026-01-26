@@ -23,7 +23,8 @@ FetchContent_MakeAvailable(json)
 
 add_library(WinDurango.Common SHARED ${FILES})
 target_include_directories(WinDurango.Common PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/WinDurango.Common/>
 )
 
 target_link_libraries(WinDurango.Common PUBLIC nlohmann_json::nlohmann_json)

@@ -3,6 +3,7 @@
 //
 #pragma once
 #include <filesystem>
+#include <memory>
 #include "File.h"
 
 namespace wd::common::interfaces::storage {
@@ -19,8 +20,8 @@ namespace wd::common::interfaces::storage {
         Directory() {}
 
         virtual bool open() = 0;
-        virtual File* CreateFile(std::filesystem::path path) = 0; // todo maybe return stream type, todo can we use this in uwp context??? I forgor
-        virtual Directory* CreateFolder(std::filesystem::path path) = 0;
+        virtual std::shared_ptr<File> CreateFile(std::filesystem::path path) = 0; // todo maybe return stream type, todo can we use this in uwp context??? I forgor
+        virtual std::shared_ptr<Directory> CreateFolder(std::filesystem::path path) = 0;
 
         virtual std::filesystem::path dirpath() = 0;
         

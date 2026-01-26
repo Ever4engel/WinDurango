@@ -33,13 +33,13 @@ bool wd::impl::winrt::interfaces::storage::WinRTDirectory::open() {
  * TargetPath is the filename btw
  * any path will be ignored.
 */
-wd::common::interfaces::storage::File* wd::impl::winrt::interfaces::storage::WinRTDirectory::CreateFile(std::filesystem::path targetPath) {
+std::shared_ptr<wd::common::interfaces::storage::File> wd::impl::winrt::interfaces::storage::WinRTDirectory::CreateFile(std::filesystem::path targetPath) {
     if (dir == nullptr) {
         return nullptr;
     }
     try {
         auto file = dir.CreateFileAsync(hstring(targetPath.filename().wstring()), CreationCollisionOption::OpenIfExists).get();
-        wd::impl::winrt::interfaces::storage::WinRTFile* fileRT = new wd::impl::winrt::interfaces::storage::WinRTFile(path / targetPath.filename());
+        std::shared_ptr<wd::impl::winrt::interfaces::storage::WinRTFile> fileRT = std::make_shared<wd::impl::winrt::interfaces::storage::WinRTFile>(path / targetPath.filename());
         return fileRT;
     }
     catch (const hresult_error& ex) {
@@ -48,15 +48,15 @@ wd::common::interfaces::storage::File* wd::impl::winrt::interfaces::storage::Win
 }
 
 /*
- * TODO: Use Unique Pointers
+ * TODO: Use Shared Pointers
 */
-wd::common::interfaces::storage::Directory* wd::impl::winrt::interfaces::storage::WinRTDirectory::CreateFolder(std::filesystem::path targetPath) {
+std::shared_ptr<wd::common::interfaces::storage::Directory> wd::impl::winrt::interfaces::storage::WinRTDirectory::CreateFolder(std::filesystem::path targetPath) {
     if (dir == nullptr) {
         return nullptr;
     }
     try {
         auto file = dir.CreateFolderAsync(hstring(targetPath.filename().wstring()), CreationCollisionOption::OpenIfExists).get();
-        wd::impl::winrt::interfaces::storage::WinRTDirectory* folderRT = new wd::impl::winrt::interfaces::storage::WinRTDirectory(path / targetPath.filename());
+        std::shared_ptr<wd::impl::winrt::interfaces::storage::WinRTDirectory> folderRT = std::make_shared<wd::impl::winrt::interfaces::storage::WinRTDirectory>(path / targetPath.filename());
         return folderRT;
     }
     catch (const hresult_error& ex) {

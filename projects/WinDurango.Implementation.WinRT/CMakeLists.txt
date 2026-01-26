@@ -11,6 +11,7 @@ set(FILES
     include/WinDurango.Implementation.WinRT/Interfaces/Storage/File.h
     src/interfaces/Storage/Directory.cpp
     src/interfaces/Storage/File.cpp
+    src/WinRT.cpp
 )
 
 add_compile_definitions(WDIMPL_API_EXPORTS)
