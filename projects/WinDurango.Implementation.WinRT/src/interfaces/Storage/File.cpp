@@ -91,6 +91,13 @@ namespace wd::impl::winrt::interfaces::storage {
         return path;
     }
 
+    std::filesystem::path WinRTFile::fullfilepath() {
+        StorageFolder sf = ApplicationData::Current().LocalFolder();
+        std::filesystem::path rootPath { sf.Path().c_str() };
+
+        return rootPath / path;
+    }
+
     bool WinRTFile::rename(std::string name) {
         if (file == nullptr) {
             return false;

@@ -27,4 +27,4 @@ ZERO_CHECK.dir
 /cmake-build-debug
 /out
 .suo
-projects/WinDurango/WinDurango.Testing/.vs
+projects/WinDurango.Testing/.vs

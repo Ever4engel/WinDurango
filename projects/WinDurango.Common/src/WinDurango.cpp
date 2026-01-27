@@ -9,16 +9,38 @@ namespace wd::common
     {
         static WinDurango Instance = WinDurango(); // if we don't declare it in src, it will make multiple instances per
                                                    // header import in different libs afaik
-        if (!Instance._inited)
-            Instance.Init(); // lazy
 
         return &Instance;
     }
 
-    void WinDurango::Init()
-    {
-        // todo load config
+    void WinDurango::Init(std::shared_ptr<interfaces::storage::Directory> rootDir) {
+        try {
+            rootDir->open();
 
-        this->_inited = true;
+            std::time_t timestamp = std::time(nullptr);
+            std::tm datetm = *std::localtime(&timestamp);
+
+            char* buf;
+            std::strftime(buf, sizeof(buf), "%d.%m.%Y", &datetm);
+
+            std::string date(buf);
+            WinDurangoRoot = rootDir->CreateFolder("WinDurango");
+            WinDurangoRoot->open();
+
+            std::shared_ptr<interfaces::storage::File> LogFile = WinDurangoRoot->CreateFile("windurango_log_" + date + ".log");
+            std::shared_ptr<interfaces::storage::File> ConfigFile = WinDurangoRoot->CreateFile("windurango.json");
+
+            config = Config(ConfigFile);
+            log = Logging(LogFile);
+
+            config.parse();
+            log.Initialize();
+
+            this->_inited = true;
+        } catch (const std::exception& e) {
+            std::cout << "[WinDurango::Common::WinDurango.exception] - Critical: " << e.what() << "\n";
+        } catch (...) {
+            std::cout << "[WinDurango::Common::WinDurango.(...))] - Critical: Unknown Error\n";
+        }
     }
 } // namespace wd::common

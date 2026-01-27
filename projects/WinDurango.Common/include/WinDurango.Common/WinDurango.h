@@ -2,25 +2,28 @@
 // Created by DexrnZacAttack on 1/23/26 using zPc-i2.
 //
 #pragma once
-
+#include <ctime>
+#include "Interfaces/Storage/Directory.h"
 #include "Config.h"
+#include "Logging.h"
 #include "exports.h"
 
-namespace wd::common
-{
-  class WD_API WinDurango
-  {
+namespace wd::common {
+    class WD_API WinDurango {
     public:
-      static WinDurango *GetInstance();
+        static WinDurango *GetInstance();
 
-      WinDurango() = default;
+        WinDurango() = default;
 
-      void Init();
+        void Init(std::shared_ptr<interfaces::storage::Directory> rootDir);
 
-      Config Config;
+        Config config;
+        Logging log;
 
     private:
-      bool _inited = false;
-  };
+        bool _inited = false;
+        std::shared_ptr<interfaces::storage::Directory> rootDir;
+        std::shared_ptr<interfaces::storage::Directory> WinDurangoRoot;
+    };
 } // namespace wd::common
 

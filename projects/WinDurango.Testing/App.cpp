@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "WinDurango.Implementation.WinRT/Interfaces/Storage/Directory.h"
+#include "WinDurango.Common/Logging.h"
 #include <iostream>
 
 using namespace winrt;
@@ -19,6 +20,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     Visual m_selected{ nullptr };
     float2 m_offset{};
     bool runFirst = true;
+    wd::common::Logging logthing;
 
     IFrameworkView CreateView()
     {
@@ -104,8 +106,14 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
             auto wdlog = wddir->CreateFile("log.txt");
             wdlog->open();
             (*wdlog) << std::string("Testing");
+            logthing = wd::common::Logging(wdlog);
+            logthing.Initialize();
+            logthing.Log("WinDurango.Testing", "Hi");
+            logthing.Warn("WinDurango.Testing", "Bye");
+            logthing.Error("WinDurango.Testing", "Oops");
             runFirst = false;
         }
+        logthing.Log("WinDurango.Testing", "Click");
     }
 
     void OnPointerMoved(IInspectable const &, PointerEventArgs const & args)

@@ -23,6 +23,7 @@ namespace wd::impl::winrt::interfaces::storage {
         virtual bool close() override;
 
         virtual std::filesystem::path filepath() override;
+        virtual std::filesystem::path fullfilepath() override;
         
         virtual bool rename(std::string) override;
         virtual bool remove() override;

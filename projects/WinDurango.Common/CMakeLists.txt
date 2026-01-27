@@ -10,12 +10,13 @@ add_compile_definitions(WD_API_EXPORTS)
 
 set(FILES
     include/WinDurango.Common/WinDurango.h
-    src/WinDurango.cpp
-
     include/WinDurango.Common/Config.h
     include/WinDurango.Common/Logging.h
     include/WinDurango.Common/Interfaces/Storage/Directory.h
     include/WinDurango.Common/Interfaces/Storage/File.h
+    src/WinDurango.cpp
+    src/Config.cpp
+    src/Logging.cpp
 )
 
 FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)

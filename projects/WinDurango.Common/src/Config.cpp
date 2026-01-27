@@ -2,6 +2,7 @@
 
 bool wd::common::Config::parse() {
     try {
+        pFile->open();
         std::string jsonData = pFile->read();
         data = nlohmann::json::parse(jsonData);
         return true;

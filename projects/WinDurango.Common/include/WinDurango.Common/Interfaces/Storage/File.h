@@ -20,6 +20,7 @@ namespace wd::common::interfaces::storage {
         virtual bool close() = 0;
 
         virtual std::filesystem::path filepath() = 0;
+        virtual std::filesystem::path fullfilepath() = 0;
         
         virtual bool rename(std::string) = 0;
         virtual bool remove() = 0;
