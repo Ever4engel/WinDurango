@@ -16,8 +16,10 @@ FetchContent_MakeAvailable(safetyhook)
 
 set(FILES
     src/kernelx.cpp
+    src/dllmain.cpp
     include/WinDurango.KernelX/kernelx.h
     include/WinDurango.KernelX/Logan.h
+    include/WinDurango.KernelX/Hooks.h
 )
 
 add_library(WinDurango.KernelX SHARED ${FILES})
