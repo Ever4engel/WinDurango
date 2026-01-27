@@ -21,7 +21,10 @@ ZERO_CHECK.dir
 .vscode
 /.cmake
 /.vs
-/.vs
+*.vc
+*.vs
 /artifacts
 /cmake-build-debug
 /out
+.suo
+projects/WinDurango/WinDurango.Testing/.vs
