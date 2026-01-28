@@ -1,8 +1,0 @@
-Package: cppwinrt
-Version: 2.0.250303.1
-Architecture: x64-windows
-Multi-Arch: same
-Abi: decb487e4b07b74f127eaf84eec7e367b2581d7d74319acf644d3c64e0fc7eef
-Description: C++/WinRT is a standard C++ language projection for the Windows Runtime.
-Status: install ok installed
-
