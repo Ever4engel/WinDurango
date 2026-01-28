@@ -4,7 +4,7 @@ project(WinDurango.WinRT VERSION 1.0.0)
 set(VERSION_SUFFIX "-dev.1") # used for non-stable versions, otherwise blank
 set(CMAKE_CXX_STANDARD 20)
 
-find_package(cppwinrt CONFIG REQUIRED)
+find_package(cppwinrt CONFIG REQUIRED HINTS "${CMAKE_SOURCE_DIR}/vcpkg_installed/vcpkg/pkgs/cppwinrt_x64-windows/share/cppwinrt")
 
 make_directory(${CMAKE_BINARY_DIR}/WinMetadata)
 file(GLOB IDL_FILES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/idl/*.idl")

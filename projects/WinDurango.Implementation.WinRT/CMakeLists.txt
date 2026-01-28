@@ -4,7 +4,7 @@ project(WinDurango.Implementation.WinRT VERSION 1.0.0)
 set(VERSION_SUFFIX "-dev.1") # used for non-stable versions, otherwise blank
 set(CMAKE_CXX_STANDARD 20)
 
-find_package(cppwinrt CONFIG REQUIRED)
+find_package(cppwinrt CONFIG REQUIRED HINTS "${CMAKE_SOURCE_DIR}/vcpkg_installed/vcpkg/pkgs/cppwinrt_x64-windows/share/cppwinrt")
 
 set(FILES
     include/WinDurango.Implementation.WinRT/Interfaces/Storage/Directory.h
