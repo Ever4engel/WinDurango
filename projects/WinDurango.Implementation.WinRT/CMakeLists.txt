@@ -20,6 +20,7 @@ add_library(WinDurango.Implementation.WinRT SHARED ${FILES})
 target_include_directories(WinDurango.Implementation.WinRT PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/WinDurango.Implementation.WinRT>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/projects/WinDurango.Common/include>
 )
 
 set_property(

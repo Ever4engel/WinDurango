@@ -3,7 +3,7 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/base.h>
-#include "WinDurango.Implementation.WinRT/WinDurangoWinRT.h"
+#include "WinDurango.Implementation.WinRT/WinDurangoImplWinRT.h"
 #include "WinDurango.Common/interfaces/Storage/Directory.h"
 #include "WinDurango.Implementation.WinRT/Interfaces/Storage/File.h"
 

@@ -5,7 +5,7 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/base.h>
-#include "WinDurango.Implementation.WinRT/WinDurangoWinRT.h"
+#include "WinDurango.Implementation.WinRT/WinDurangoImplWinRT.h"
 #include "WinDurango.Common/Interfaces/Storage/File.h"
 
 using namespace winrt::Windows::Storage;

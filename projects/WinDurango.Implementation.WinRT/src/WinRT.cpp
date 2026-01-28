@@ -1,6 +1,6 @@
 #include <windows.h>
 #include <iostream>
-#include "WinDurangoWinRT.h"
+#include "WinDurangoImplWinRT.h"
 
 /*
  * Found here

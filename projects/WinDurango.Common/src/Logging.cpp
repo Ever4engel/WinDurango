@@ -17,7 +17,8 @@ void wd::common::Logging::Initialize() {
 
         log["WinDurango"] = logg;
         log["WinDurango"]->set_pattern("[%n] [%H:%M:%S] [thread %t] - %^%l%$: %v");
-        logg->info("Setting Log File: {}", pFile->fullfilepath().string());
+        log["WinDurango"]->info("Setting Log File: {}", pFile->fullfilepath().string());
+        log["WinDurango"]->flush_on(spdlog::level::info);
         isInitialized = true;
     } catch (const spdlog::spdlog_ex& e) {
         std::cout << "[WinDurango::Common::Logging.spdlog] - Critical: " << e.what() << "\n";
@@ -44,6 +45,7 @@ void wd::common::Logging::AddLogger(std::string codespace) {
 
         log[codespace] = logg;
         log[codespace]->set_pattern("[%n] [%H:%M:%S] [thread %t] - %^%l%$: %v");
+        log[codespace]->flush_on(spdlog::level::info);
     } catch (const spdlog::spdlog_ex& e) {
         std::cout << "[WinDurango::Common::Logging.spdlog] - Critical: " << e.what() << "\n";
     } catch (const std::exception& e) {

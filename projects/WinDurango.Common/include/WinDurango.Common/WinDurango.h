@@ -11,11 +11,12 @@
 namespace wd::common {
     class WD_API WinDurango {
     public:
-        static WinDurango *GetInstance();
+        static std::shared_ptr<WinDurango> GetInstance();
 
         WinDurango() = default;
 
         void Init(std::shared_ptr<interfaces::storage::Directory> rootDir);
+        bool inited();
 
         Config config;
         Logging log;

@@ -17,6 +17,7 @@ FetchContent_MakeAvailable(safetyhook)
 set(FILES
     src/kernelx.cpp
     src/dllmain.cpp
+    src/Hooks.cpp
     include/WinDurango.KernelX/kernelx.h
     include/WinDurango.KernelX/Logan.h
     include/WinDurango.KernelX/Hooks.h
@@ -24,7 +25,7 @@ set(FILES
 
 add_library(WinDurango.KernelX SHARED ${FILES})
 
-target_link_libraries(WinDurango.KernelX PRIVATE WinDurango.Common)
+target_link_libraries(WinDurango.KernelX PRIVATE WinDurango.Common WinDurango.Implementation.WinRT)
 
 target_link_options(WinDurango.KernelX
     PUBLIC 
@@ -33,6 +34,8 @@ target_link_options(WinDurango.KernelX
 
 target_include_directories(WinDurango.KernelX PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/WinDurango.KernelX/
+    ${CMAKE_SOURCE_DIR}/projects/WinDurango.Common/include
+    ${CMAKE_SOURCE_DIR}/projects/WinDurango.Implementation.WinRT/include
 )
 
 set_target_properties(WinDurango.KernelX PROPERTIES

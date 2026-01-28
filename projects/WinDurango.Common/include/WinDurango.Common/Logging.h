@@ -25,17 +25,17 @@ namespace wd::common {
         * >> [WinDurango::Common::Storage] 11:25AM 26/12/2025 - Failed to do smth - Code 5
         */
         template<typename... Args>
-        void Log(std::string codespace, Args&&... args) {
+        void Log(std::string codespace, fmt::format_string<Args...> fmt, Args&&... args) {
             if (!isInitialized) {
                 std::cout << "[WinDurango::Common::Logging.Initialize] - Critical: Logging isn't Initiailized\n";
                 return;
             }
             try {
                 if (log.find(codespace) != log.end()) {
-                    log[codespace]->info(std::forward<Args>(args)...);
+                    log[codespace]->info(fmt, std::forward<Args>(args)...);
                 } else {
                     AddLogger(codespace);
-                    log[codespace]->info(std::forward<Args>(args)...);
+                    log[codespace]->info(fmt, std::forward<Args>(args)...);
                 }
             } catch (const spdlog::spdlog_ex& e) {
                 std::cout << "[WinDurango::Common::Logging.spdlog] - Critical: " << e.what() << "\n";
@@ -47,17 +47,17 @@ namespace wd::common {
         }
 
         template<typename... Args>
-        void Warn(std::string codespace, Args&&... args) {
+        void Warn(std::string codespace, fmt::format_string<Args...> fmt, Args&&... args) {
             if (!isInitialized) {
                 std::cout << "[WinDurango::Common::Logging.Initialize] - Critical: Logging isn't Initiailized\n";
                 return;
             }
             try {
                 if (log.find(codespace) != log.end()) {
-                    log[codespace]->warn(std::forward<Args>(args)...);
+                    log[codespace]->warn(fmt, std::forward<Args>(args)...);
                 } else {
                     AddLogger(codespace);
-                    log[codespace]->warn(std::forward<Args>(args)...);
+                    log[codespace]->warn(fmt, std::forward<Args>(args)...);
                 }
             } catch (const spdlog::spdlog_ex& e) {
                 std::cout << "[WinDurango::Common::Logging.spdlog] - Critical: " << e.what() << "\n";
@@ -69,17 +69,17 @@ namespace wd::common {
         }
 
         template<typename... Args>
-        void Error(std::string codespace, Args&&... args) {
+        void Error(std::string codespace, fmt::format_string<Args...> fmt, Args&&... args) {
             if (!isInitialized) {
                 std::cout << "[WinDurango::Common::Logging.Initialize] - Critical: Logging isn't Initiailized\n";
                 return;
             }
             try {
                 if (log.find(codespace) != log.end()) {
-                    log[codespace]->error(std::forward<Args>(args)...);
+                    log[codespace]->error(fmt, std::forward<Args>(args)...);
                 } else {
                     AddLogger(codespace);
-                    log[codespace]->error(std::forward<Args>(args)...);
+                    log[codespace]->error(fmt, std::forward<Args>(args)...);
                 }
             } catch (const spdlog::spdlog_ex& e) {
                 std::cout << "[WinDurango::Common::Logging.spdlog] - Critical: " << e.what() << "\n";

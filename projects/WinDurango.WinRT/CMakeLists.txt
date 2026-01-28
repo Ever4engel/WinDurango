@@ -38,26 +38,36 @@ execute_process(
         -out "${CMAKE_CURRENT_SOURCE_DIR}\\Generated Files")
 
 set(FILES
-    "include/WinDurango.WinRT/stub.h"
+    "src/Windows/Xbox/Media/GameTransportControls.cpp"
+    "src/Windows/Xbox/Media/GameTransportControlsButtonPressedEventArgs.cpp"
+    "src/Windows/Xbox/Media/GameTransportControlsPropertyChangedEventArgs.cpp"
+    "src/WinDurangoWinRT.cpp"
 )
 
-file(GLOB WINRT_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files/winrt/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files/winrt/*.h")
+file(GLOB WINRT_FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files/*.cpp" 
+    "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files/winrt/*.cpp" 
+    "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files/winrt/impl/*.cpp" 
+)
 
 add_library(WinDurango.WinRT SHARED ${FILES} ${WINRT_FILES} WinDurango.WinRT.def)
 target_include_directories(WinDurango.WinRT PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/WinDurango.WinRT"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files"
+    "${CMAKE_SOURCE_DIR}/projects/WinDurango.Common/include"
 )
 
 set_property(
   TARGET WinDurango.WinRT
   PROPERTY VS_PACKAGE_REFERENCES
-  "Microsoft.Windows.CppWinRT_2.0.230706.1"
+  "Microsoft.Windows.CppWinRT_2.0.250303.1"
   "Microsoft.WindowsAppSDK_1.4.231115000"
   "Microsoft.Windows.SDK.BuildTools_10.0.22621.756"
   "Microsoft.Windows.ImplementationLibrary_1.0.230629.1"
 )
 
-target_link_libraries(WinDurango.WinRT PRIVATE WinDurango.Common Microsoft::CppWinRT)
+target_link_libraries(WinDurango.WinRT PRIVATE WinDurango.Common Microsoft::CppWinRT WindowsApp)
 
 target_compile_definitions(WinDurango.WinRT PUBLIC
     WINDURANGO_WINRT_COMPILER_NAME="${CMAKE_CXX_COMPILER_ID}"
@@ -67,10 +77,9 @@ target_compile_definitions(WinDurango.WinRT PUBLIC
     WINDURANGO_WINRT_RC_VERSION=${PROJECT_VERSION_MAJOR},${PROJECT_VERSION_MINOR},${PROJECT_VERSION_PATCH}
 )
 
-set_target_properties(WinDurango.Implementation.WinRT PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(WinDurango.WinRT PROPERTIES LINKER_LANGUAGE CXX)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES VS_WINDOWS_TARGET_PLATFORM_MIN_VERSION 10.0.18362.0)
-target_compile_definitions(WinDurango.Implementation.WinRT PRIVATE _WINRT_DLL WIN32_LEAN_AND_MEAN WINRT_LEAN_AND_MEAN)
+target_compile_definitions(WinDurango.WinRT PRIVATE _WINRT_DLL WIN32_LEAN_AND_MEAN WINRT_LEAN_AND_MEAN)
 
 if (WINRT_USE_CROSS_PLATFORM STREQUAL ON)
     target_link_libraries(WinDurango.WinRT PUBLIC WinDurango.Implementation.Native)

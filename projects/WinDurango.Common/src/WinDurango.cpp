@@ -5,22 +5,29 @@
 
 namespace wd::common
 {
-    WinDurango *WinDurango::GetInstance()
+    std::shared_ptr<WinDurango> WinDurango::GetInstance()
     {
-        static WinDurango Instance = WinDurango(); // if we don't declare it in src, it will make multiple instances per
+        static std::shared_ptr<WinDurango> Instance = std::make_shared<WinDurango>(); // if we don't declare it in src, it will make multiple instances per
                                                    // header import in different libs afaik
 
-        return &Instance;
+        return Instance;
+    }
+
+    bool WinDurango::inited() {
+        return _inited;
     }
 
     void WinDurango::Init(std::shared_ptr<interfaces::storage::Directory> rootDir) {
+        if (this->_inited) {
+            return;
+        }
         try {
             rootDir->open();
 
             std::time_t timestamp = std::time(nullptr);
             std::tm datetm = *std::localtime(&timestamp);
 
-            char* buf;
+            char buf[512];
             std::strftime(buf, sizeof(buf), "%d.%m.%Y", &datetm);
 
             std::string date(buf);
