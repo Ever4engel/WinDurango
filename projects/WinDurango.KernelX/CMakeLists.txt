@@ -26,6 +26,11 @@ add_library(WinDurango.KernelX SHARED ${FILES})
 
 target_link_libraries(WinDurango.KernelX PRIVATE WinDurango.Common)
 
+target_link_options(WinDurango.KernelX
+    PUBLIC 
+    $<$<CXX_COMPILER_ID:MSVC>:/FORCE:MULTIPLE>
+)
+
 target_include_directories(WinDurango.KernelX PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/WinDurango.KernelX/
 )

@@ -11,7 +11,7 @@ set(CMAKE_PDB_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
 add_subdirectory(projects/WinDurango.Common)
 add_subdirectory(projects/WinDurango.Implementation.WinRT)
 add_subdirectory(projects/WinDurango.Implementation.Native)
-#add_subdirectory(projects/WinDurango.WinRT)
+add_subdirectory(projects/WinDurango.WinRT)
 add_subdirectory(projects/WinDurango.etwplus)
 add_subdirectory(projects/WinDurango.KernelX)
 add_subdirectory(projects/WinDurango.D3D11X)
@@ -20,7 +20,7 @@ add_custom_target(WinDurango ALL DEPENDS
     WinDurango.Common
     WinDurango.Implementation.WinRT
     WinDurango.Implementation.Native
-    #WinDurango.WinRT
+    WinDurango.WinRT
     WinDurango.etwplus
     WinDurango.KernelX
     WinDurango.D3D11X

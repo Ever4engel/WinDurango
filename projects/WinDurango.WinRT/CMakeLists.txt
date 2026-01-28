@@ -2,10 +2,9 @@ cmake_minimum_required(VERSION 3.30)
 project(WinDurango.WinRT VERSION 1.0.0)
 
 set(VERSION_SUFFIX "-dev.1") # used for non-stable versions, otherwise blank
+set(CMAKE_CXX_STANDARD 20)
 
-set(CMAKE_CXX_STANDARD 17)
-
-# Partially derived from dazombiekiller's CMake script that we were given permission to use
+find_package(cppwinrt CONFIG REQUIRED)
 
 make_directory(${CMAKE_BINARY_DIR}/WinMetadata)
 file(GLOB IDL_FILES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/idl/*.idl")
@@ -44,20 +43,21 @@ set(FILES
 
 file(GLOB WINRT_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files/winrt/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files/winrt/*.h")
 
-set(WINRT_USE_CROSS_PLATFORM OFF)
-
 add_library(WinDurango.WinRT SHARED ${FILES} ${WINRT_FILES} WinDurango.WinRT.def)
 target_include_directories(WinDurango.WinRT PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
-target_link_libraries(WinDurango.WinRT PUBLIC WinDurango.Common)
-
-set_target_properties(WinDurango.WinRT PROPERTIES
-    VS_WINRT_COMPONENT TRUE
-    VS_GLOBAL_ROOTNAMESPACE "WinDurango.WinRT"
-    OUTPUT_NAME "WinDurango.WinRT"
+set_property(
+  TARGET WinDurango.WinRT
+  PROPERTY VS_PACKAGE_REFERENCES
+  "Microsoft.Windows.CppWinRT_2.0.230706.1"
+  "Microsoft.WindowsAppSDK_1.4.231115000"
+  "Microsoft.Windows.SDK.BuildTools_10.0.22621.756"
+  "Microsoft.Windows.ImplementationLibrary_1.0.230629.1"
 )
+
+target_link_libraries(WinDurango.WinRT PRIVATE WinDurango.Common Microsoft::CppWinRT)
 
 target_compile_definitions(WinDurango.WinRT PUBLIC
     WINDURANGO_WINRT_COMPILER_NAME="${CMAKE_CXX_COMPILER_ID}"
@@ -67,31 +67,18 @@ target_compile_definitions(WinDurango.WinRT PUBLIC
     WINDURANGO_WINRT_RC_VERSION=${PROJECT_VERSION_MAJOR},${PROJECT_VERSION_MINOR},${PROJECT_VERSION_PATCH}
 )
 
+set_target_properties(WinDurango.Implementation.WinRT PROPERTIES LINKER_LANGUAGE CXX)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES VS_WINDOWS_TARGET_PLATFORM_MIN_VERSION 10.0.18362.0)
+target_compile_definitions(WinDurango.Implementation.WinRT PRIVATE _WINRT_DLL WIN32_LEAN_AND_MEAN WINRT_LEAN_AND_MEAN)
+
 if (WINRT_USE_CROSS_PLATFORM STREQUAL ON)
     target_link_libraries(WinDurango.WinRT PUBLIC WinDurango.Implementation.Native)
-    target_compile_definitions(WinDurango.WinRT PUBLIC
-    WINRT_CROSS_PLATFORM)
+    target_compile_definitions(WinDurango.WinRT PUBLIC WINRT_CROSS_PLATFORM)
 else()
     target_link_libraries(WinDurango.WinRT PUBLIC WinDurango.Implementation.WinRT)
-
-    # todo is this still needed?
-    find_program(NUGET_EXE NAMES nuget)
-    if(NOT NUGET_EXE)
-	    message("NUGET.EXE not found.")
-	    message(FATAL_ERROR "Please install this executable, and run CMake again.")
-    endif()
-
-    execute_process(COMMAND ${NUGET_EXE}
-    install "Microsoft.Windows.CppWinRT" -Version 2.0.250303.1 -ExcludeVersion -OutputDirectory ${CMAKE_BINARY_DIR}/packages)
 endif()
-unset(WINRT_USE_CROSS_PLATFORM CACHE)
 
-set_target_properties(WinDurango.WinRT PROPERTIES LINKER_LANGUAGE CXX)
-# todo needed?
-#set_target_properties(WinDurango.WinRT PROPERTIES LIBRARY_OUTPUT_NAME "winrt")
-#set_target_properties(${PROJECT_NAME} PROPERTIES VS_CPPWINRT true)
-set_target_properties(${PROJECT_NAME} PROPERTIES VS_WINDOWS_TARGET_PLATFORM_MIN_VERSION 10.0.18362.0)
-target_compile_definitions(WinDurango.WinRT PRIVATE _WINRT_DLL WIN32_LEAN_AND_MEAN WINRT_LEAN_AND_MEAN)
 set_target_properties(WinDurango.WinRT PROPERTIES
     OUTPUT_NAME "winrt_x"
 )
