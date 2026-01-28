@@ -171,7 +171,7 @@
 #define __WI_ALIGNAS(x) __attribute__((__aligned__(x)))
 #endif
 
-#if __has_feature(cxx_explicit_conversions) || defined(__IBMCPP__) || \
+#if __has_feature(cxx_explicit_conversions) || defined(__IBMCPP__) ||                                                  \
     (!defined(__WI_LIBCPP_CXX03_LANG) && defined(__GNUC__)) // All supported GCC versions
 #define __WI_LIBCPP_EXPLICIT explicit
 #else
@@ -411,7 +411,8 @@
 #define __WI_LIBCPP_CONSTEXPR_AFTER_CXX17
 #endif
 
-#if !defined(__WI_LIBCPP_DISABLE_NODISCARD_AFTER_CXX17) && (__WI_LIBCPP_STD_VER > 17 || defined(__WI_LIBCPP_ENABLE_NODISCARD))
+#if !defined(__WI_LIBCPP_DISABLE_NODISCARD_AFTER_CXX17) &&                                                             \
+    (__WI_LIBCPP_STD_VER > 17 || defined(__WI_LIBCPP_ENABLE_NODISCARD))
 #define __WI_LIBCPP_NODISCARD_AFTER_CXX17 __WI_LIBCPP_NODISCARD_ATTRIBUTE
 #else
 #define __WI_LIBCPP_NODISCARD_AFTER_CXX17
@@ -473,113 +474,113 @@
 
 namespace wistd // ("Windows Implementation" std)
 {
-using nullptr_t = decltype(__nullptr);
+    using nullptr_t = decltype(__nullptr);
 
-template <class _T1, class _T2 = _T1>
-struct __less
-{
-    __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
-        const _T1& __x, const _T1& __y) const
+    template <class _T1, class _T2 = _T1> struct __less
     {
-        return __x < __y;
+        __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
+            const _T1 &__x, const _T1 &__y) const
+        {
+            return __x < __y;
+        }
+
+        __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
+            const _T1 &__x, const _T2 &__y) const
+        {
+            return __x < __y;
+        }
+
+        __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
+            const _T2 &__x, const _T1 &__y) const
+        {
+            return __x < __y;
+        }
+
+        __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
+            const _T2 &__x, const _T2 &__y) const
+        {
+            return __x < __y;
+        }
+    };
+
+    template <class _T1> struct __less<_T1, _T1>
+    {
+        __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
+            const _T1 &__x, const _T1 &__y) const
+        {
+            return __x < __y;
+        }
+    };
+
+    template <class _T1> struct __less<const _T1, _T1>
+    {
+        __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
+            const _T1 &__x, const _T1 &__y) const
+        {
+            return __x < __y;
+        }
+    };
+
+    template <class _T1> struct __less<_T1, const _T1>
+    {
+        __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
+            const _T1 &__x, const _T1 &__y) const
+        {
+            return __x < __y;
+        }
+    };
+
+    // These are added to wistd to enable use of min/max without having to use the windows.h min/max
+    // macros that some clients might not have access to. Note: the STL versions of these have debug
+    // checking for the less than operator and support for iterators that these implementations lack.
+    // Use the STL versions when you require use of those features.
+
+    // min
+
+    template <class _Tp, class _Compare>
+    inline __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 const _Tp &(min)(const _Tp &__a,
+                                                                                            const _Tp &__b,
+                                                                                            _Compare __comp)
+    {
+        return __comp(__b, __a) ? __b : __a;
     }
 
-    __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
-        const _T1& __x, const _T2& __y) const
+    template <class _Tp>
+    inline __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 const _Tp &(min)(const _Tp &__a,
+                                                                                            const _Tp &__b)
     {
-        return __x < __y;
+        return (min)(__a, __b, __less<_Tp>());
     }
 
-    __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
-        const _T2& __x, const _T1& __y) const
+    // max
+
+    template <class _Tp, class _Compare>
+    inline __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 const _Tp &(max)(const _Tp &__a,
+                                                                                            const _Tp &__b,
+                                                                                            _Compare __comp)
     {
-        return __x < __y;
+        return __comp(__a, __b) ? __b : __a;
     }
 
-    __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
-        const _T2& __x, const _T2& __y) const
+    template <class _Tp>
+    inline __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 const _Tp &(max)(const _Tp &__a,
+                                                                                            const _Tp &__b)
     {
-        return __x < __y;
+        return (max)(__a, __b, __less<_Tp>());
     }
-};
 
-template <class _T1>
-struct __less<_T1, _T1>
-{
-    __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
-        const _T1& __x, const _T1& __y) const
+    template <class _Arg, class _Result> struct __WI_LIBCPP_TEMPLATE_VIS unary_function
     {
-        return __x < __y;
-    }
-};
+        using argument_type = _Arg;
+        using result_type = _Result;
+    };
 
-template <class _T1>
-struct __less<const _T1, _T1>
-{
-    __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
-        const _T1& __x, const _T1& __y) const
+    template <class _Arg1, class _Arg2, class _Result> struct __WI_LIBCPP_TEMPLATE_VIS binary_function
     {
-        return __x < __y;
-    }
-};
-
-template <class _T1>
-struct __less<_T1, const _T1>
-{
-    __WI_LIBCPP_NODISCARD_ATTRIBUTE __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 bool operator()(
-        const _T1& __x, const _T1& __y) const
-    {
-        return __x < __y;
-    }
-};
-
-// These are added to wistd to enable use of min/max without having to use the windows.h min/max
-// macros that some clients might not have access to. Note: the STL versions of these have debug
-// checking for the less than operator and support for iterators that these implementations lack.
-// Use the STL versions when you require use of those features.
-
-// min
-
-template <class _Tp, class _Compare>
-inline __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 const _Tp&(min)(const _Tp& __a, const _Tp& __b, _Compare __comp)
-{
-    return __comp(__b, __a) ? __b : __a;
-}
-
-template <class _Tp>
-inline __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 const _Tp&(min)(const _Tp& __a, const _Tp& __b)
-{
-    return (min)(__a, __b, __less<_Tp>());
-}
-
-// max
-
-template <class _Tp, class _Compare>
-inline __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 const _Tp&(max)(const _Tp& __a, const _Tp& __b, _Compare __comp)
-{
-    return __comp(__a, __b) ? __b : __a;
-}
-
-template <class _Tp>
-inline __WI_LIBCPP_INLINE_VISIBILITY __WI_LIBCPP_CONSTEXPR_AFTER_CXX11 const _Tp&(max)(const _Tp& __a, const _Tp& __b)
-{
-    return (max)(__a, __b, __less<_Tp>());
-}
-
-template <class _Arg, class _Result>
-struct __WI_LIBCPP_TEMPLATE_VIS unary_function
-{
-    using argument_type = _Arg;
-    using result_type = _Result;
-};
-
-template <class _Arg1, class _Arg2, class _Result>
-struct __WI_LIBCPP_TEMPLATE_VIS binary_function
-{
-    using first_argument_type = _Arg1;
-    using second_argument_type = _Arg2;
-    using result_type = _Result;
-};
+        using first_argument_type = _Arg1;
+        using second_argument_type = _Arg2;
+        using result_type = _Result;
+    };
 } // namespace wistd
 /// @endcond
 

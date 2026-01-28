@@ -1,6 +1,6 @@
-#include "pch.h"
-#include "WinDurango.Implementation.WinRT/Interfaces/Storage/Directory.h"
 #include "WinDurango.Common/Logging.h"
+#include "WinDurango.Implementation.WinRT/Interfaces/Storage/Directory.h"
+#include "pch.h"
 #include <iostream>
 
 using namespace winrt;
@@ -15,9 +15,9 @@ using namespace Windows::UI::Composition;
 
 struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 {
-    CompositionTarget m_target{ nullptr };
-    VisualCollection m_visuals{ nullptr };
-    Visual m_selected{ nullptr };
+    CompositionTarget m_target{nullptr};
+    VisualCollection m_visuals{nullptr};
+    Visual m_selected{nullptr};
     float2 m_offset{};
     bool runFirst = true;
     wd::common::Logging logthing;
@@ -31,7 +31,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     {
     }
 
-    void Load(hstring const&)
+    void Load(hstring const &)
     {
     }
 
@@ -48,7 +48,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         dispatcher.ProcessEvents(CoreProcessEventsOption::ProcessUntilQuit);
     }
 
-    void SetWindow(CoreWindow const & window)
+    void SetWindow(CoreWindow const &window)
     {
         Compositor compositor;
         ContainerVisual root = compositor.CreateContainerVisual();
@@ -56,16 +56,13 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         m_target.Root(root);
         m_visuals = root.Children();
 
-        window.PointerPressed({ this, &App::OnPointerPressed });
-        window.PointerMoved({ this, &App::OnPointerMoved });
+        window.PointerPressed({this, &App::OnPointerPressed});
+        window.PointerMoved({this, &App::OnPointerMoved});
 
-        window.PointerReleased([&](auto && ...)
-        {
-            m_selected = nullptr;
-        });
+        window.PointerReleased([&](auto &&...) { m_selected = nullptr; });
     }
 
-    void OnPointerPressed(IInspectable const &, PointerEventArgs const & args)
+    void OnPointerPressed(IInspectable const &, PointerEventArgs const &args)
     {
         float2 const point = args.CurrentPoint().Position();
 
@@ -74,9 +71,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
             float3 const offset = visual.Offset();
             float2 const size = visual.Size();
 
-            if (point.x >= offset.x &&
-                point.x < offset.x + size.x &&
-                point.y >= offset.y &&
+            if (point.x >= offset.x && point.x < offset.x + size.x && point.y >= offset.y &&
                 point.y < offset.y + size.y)
             {
                 m_selected = visual;
@@ -116,18 +111,13 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         logthing.Log("WinDurango.Testing", "Click");
     }
 
-    void OnPointerMoved(IInspectable const &, PointerEventArgs const & args)
+    void OnPointerMoved(IInspectable const &, PointerEventArgs const &args)
     {
         if (m_selected)
         {
             float2 const point = args.CurrentPoint().Position();
 
-            m_selected.Offset(
-            {
-                point.x + m_offset.x,
-                point.y + m_offset.y,
-                0.0f
-            });
+            m_selected.Offset({point.x + m_offset.x, point.y + m_offset.y, 0.0f});
         }
     }
 
@@ -136,13 +126,8 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         Compositor compositor = m_visuals.Compositor();
         SpriteVisual visual = compositor.CreateSpriteVisual();
 
-        static Color colors[] =
-        {
-            { 0xDC, 0x5B, 0x9B, 0xD5 },
-            { 0xDC, 0xED, 0x7D, 0x31 },
-            { 0xDC, 0x70, 0xAD, 0x47 },
-            { 0xDC, 0xFF, 0xC0, 0x00 }
-        };
+        static Color colors[] = {
+            {0xDC, 0x5B, 0x9B, 0xD5}, {0xDC, 0xED, 0x7D, 0x31}, {0xDC, 0x70, 0xAD, 0x47}, {0xDC, 0xFF, 0xC0, 0x00}};
 
         static unsigned last = 0;
         unsigned const next = ++last % _countof(colors);
@@ -150,14 +135,9 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 
         float const BlockSize = 100.0f;
 
-        visual.Size(
-        {
-            BlockSize,
-            BlockSize
-        });
+        visual.Size({BlockSize, BlockSize});
 
-        visual.Offset(
-        {
+        visual.Offset({
             point.x - BlockSize / 2.0f,
             point.y - BlockSize / 2.0f,
             0.0f,

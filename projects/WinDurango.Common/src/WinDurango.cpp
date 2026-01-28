@@ -7,21 +7,26 @@ namespace wd::common
 {
     std::shared_ptr<WinDurango> WinDurango::GetInstance()
     {
-        static std::shared_ptr<WinDurango> Instance = std::make_shared<WinDurango>(); // if we don't declare it in src, it will make multiple instances per
-                                                   // header import in different libs afaik
+        static std::shared_ptr<WinDurango> Instance =
+            std::make_shared<WinDurango>(); // if we don't declare it in src, it will make multiple instances per
+                                            // header import in different libs afaik
 
         return Instance;
     }
 
-    bool WinDurango::inited() {
+    bool WinDurango::inited()
+    {
         return _inited;
     }
 
-    void WinDurango::Init(std::shared_ptr<interfaces::storage::Directory> rootDir) {
-        if (this->_inited) {
+    void WinDurango::Init(std::shared_ptr<interfaces::storage::Directory> rootDir)
+    {
+        if (this->_inited)
+        {
             return;
         }
-        try {
+        try
+        {
             rootDir->open();
 
             std::time_t timestamp = std::time(nullptr);
@@ -34,7 +39,8 @@ namespace wd::common
             WinDurangoRoot = rootDir->CreateFolder("WinDurango");
             WinDurangoRoot->open();
 
-            std::shared_ptr<interfaces::storage::File> LogFile = WinDurangoRoot->CreateFile("windurango_log_" + date + ".log");
+            std::shared_ptr<interfaces::storage::File> LogFile =
+                WinDurangoRoot->CreateFile("windurango_log_" + date + ".log");
             std::shared_ptr<interfaces::storage::File> ConfigFile = WinDurangoRoot->CreateFile("windurango.json");
 
             config = Config(ConfigFile);
@@ -44,9 +50,13 @@ namespace wd::common
             log.Initialize();
 
             this->_inited = true;
-        } catch (const std::exception& e) {
+        }
+        catch (const std::exception &e)
+        {
             std::cout << "[WinDurango::Common::WinDurango.exception] - Critical: " << e.what() << "\n";
-        } catch (...) {
+        }
+        catch (...)
+        {
             std::cout << "[WinDurango::Common::WinDurango.(...))] - Critical: Unknown Error\n";
         }
     }

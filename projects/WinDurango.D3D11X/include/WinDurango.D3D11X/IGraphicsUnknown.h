@@ -1,14 +1,13 @@
 #pragma once
 #include "d3d11.x.h"
 
-template<abi_t ABI>
-class GraphicsUnknown : public xbox::IGraphicsUnknown<ABI>
+template <abi_t ABI> class GraphicsUnknown : public xbox::IGraphicsUnknown<ABI>
 {
-public:
+  public:
     //
     // IUnknown
     //
-    HRESULT QueryInterface(REFIID riid, void** ppvObject);
+    HRESULT QueryInterface(REFIID riid, void **ppvObject);
     ULONG AddRef();
     ULONG Release();
 };

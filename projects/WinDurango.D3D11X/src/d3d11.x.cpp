@@ -7,16 +7,10 @@ EXTERN_C HRESULT __stdcall EraD3D10CreateBlob()
     return E_NOTIMPL;
 }
 
-EXTERN_C HRESULT __stdcall EraD3D11CreateDevice(void* pAdapter,
-    D3D_DRIVER_TYPE DriverType,
-    HMODULE Software,
-    UINT Flags,
-    const D3D_FEATURE_LEVEL* pFeatureLevels,
-    UINT FeatureLevels,
-    UINT SDKVersion,
-    void** ppDevice,
-    D3D_FEATURE_LEVEL* pFeatureLevel,
-    void** ppImmediateContext)
+EXTERN_C HRESULT __stdcall EraD3D11CreateDevice(void *pAdapter, D3D_DRIVER_TYPE DriverType, HMODULE Software,
+                                                UINT Flags, const D3D_FEATURE_LEVEL *pFeatureLevels, UINT FeatureLevels,
+                                                UINT SDKVersion, void **ppDevice, D3D_FEATURE_LEVEL *pFeatureLevel,
+                                                void **ppImmediateContext)
 {
     IMPLEMENT_STUB();
     return E_NOTIMPL;
@@ -32,8 +26,8 @@ struct D3D11X_CREATE_DEVICE_PARAMETERS
 {
     UINT Version;
     UINT Flags;
-    void* pOffchipTessellationBuffer;
-    void* pTessellationFactorsBuffer;
+    void *pOffchipTessellationBuffer;
+    void *pTessellationFactorsBuffer;
     UINT DeferredDeletionThreadAffinityMask;
     UINT ImmediateContextDeRingSizeBytes;
     UINT ImmediateContextCeRingSizeBytes;
@@ -41,27 +35,23 @@ struct D3D11X_CREATE_DEVICE_PARAMETERS
     UINT ImmediateContextCeSegmentSizeBytes;
 };
 
-EXTERN_C HRESULT __stdcall D3D11XCreateDeviceX(const D3D11X_CREATE_DEVICE_PARAMETERS* pParameters,
-    void** ppDevice,
-    void** ppImmediateContext)
+EXTERN_C HRESULT __stdcall D3D11XCreateDeviceX(const D3D11X_CREATE_DEVICE_PARAMETERS *pParameters, void **ppDevice,
+                                               void **ppImmediateContext)
 {
     IMPLEMENT_STUB();
     return E_NOTIMPL;
 }
 
-
-EXTERN_C HRESULT __stdcall D3D11XCreateDeviceXAndSwapChain1(
-    const D3D11X_CREATE_DEVICE_PARAMETERS* pParameters,
-    const DXGI_SWAP_CHAIN_DESC1* pSwapChainDesc,
-    void** ppSwapChain,
-    void** ppDevice,
-    void** ppImmediateContext)
+EXTERN_C HRESULT __stdcall D3D11XCreateDeviceXAndSwapChain1(const D3D11X_CREATE_DEVICE_PARAMETERS *pParameters,
+                                                            const DXGI_SWAP_CHAIN_DESC1 *pSwapChainDesc,
+                                                            void **ppSwapChain, void **ppDevice,
+                                                            void **ppImmediateContext)
 {
     IMPLEMENT_STUB();
     return E_NOTIMPL;
 }
 
-EXTERN_C HRESULT __stdcall D3DAllocateGraphicsMemory(SIZE_T dwSize, UINT64 a2, void* a3, int a4, void** a5)
+EXTERN_C HRESULT __stdcall D3DAllocateGraphicsMemory(SIZE_T dwSize, UINT64 a2, void *a3, int a4, void **a5)
 {
     IMPLEMENT_STUB();
     return E_NOTIMPL;
@@ -73,13 +63,13 @@ EXTERN_C HRESULT __stdcall D3DConfigureVirtualMemory(UINT64 a1)
     return E_NOTIMPL;
 }
 
-EXTERN_C HRESULT __stdcall D3DFreeGraphicsMemory(void* pAddress)
+EXTERN_C HRESULT __stdcall D3DFreeGraphicsMemory(void *pAddress)
 {
     IMPLEMENT_STUB();
     return E_NOTIMPL;
 }
 
-EXTERN_C HRESULT __stdcall D3DMapEsramMemory(UINT Flags, void* pVirtualAddress, UINT NumPages, const UINT* pPageList)
+EXTERN_C HRESULT __stdcall D3DMapEsramMemory(UINT Flags, void *pVirtualAddress, UINT NumPages, const UINT *pPageList)
 {
     IMPLEMENT_STUB();
     return E_NOTIMPL;
@@ -100,10 +90,10 @@ struct DXGIX_FRAME_STATISTICS
     UINT64 GPUTimeFlip;
     UINT64 VSyncCount;
     float PercentScanned;
-    void* Cookie[2];
+    void *Cookie[2];
 };
 
-EXTERN_C HRESULT __stdcall DXGIXGetFrameStatistics(UINT NumberFramesRequested, DXGIX_FRAME_STATISTICS* pFrameStatistics)
+EXTERN_C HRESULT __stdcall DXGIXGetFrameStatistics(UINT NumberFramesRequested, DXGIX_FRAME_STATISTICS *pFrameStatistics)
 {
     pFrameStatistics->QueueLengthAddedToQueue = 0;
     pFrameStatistics->CPUTimeAddedToQueue = 0;
@@ -130,21 +120,18 @@ struct DXGIX_PRESENTARRAY_PARAMETERS
     POINT DestRectUpperLeft;
     FLOAT ScaleFactorVert;
     FLOAT ScaleFactorHorz;
-    void* Cookie;
-    UINT  Flags;
+    void *Cookie;
+    UINT Flags;
 };
 
-void PresentArray(UINT NumSwapChains, void** SwapChains, UINT SyncInterval)
+void PresentArray(UINT NumSwapChains, void **SwapChains, UINT SyncInterval)
 {
-    //TODO
+    // TODO
 }
 
-EXTERN_C HRESULT __stdcall DXGIXPresentArray(UINT SyncInterval,
-    UINT PresentImmediateThreshold,
-    UINT Flags,
-    UINT NumSwapChains,
-    void** ppSwapChains,
-    const DXGIX_PRESENTARRAY_PARAMETERS* pPresentParameters)
+EXTERN_C HRESULT __stdcall DXGIXPresentArray(UINT SyncInterval, UINT PresentImmediateThreshold, UINT Flags,
+                                             UINT NumSwapChains, void **ppSwapChains,
+                                             const DXGIX_PRESENTARRAY_PARAMETERS *pPresentParameters)
 {
     IMPLEMENT_STUB();
     return E_NOTIMPL;

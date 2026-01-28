@@ -1,7 +1,7 @@
 #include "Hooks.h"
-#include "WinDurango.Implementation.WinRT/Interfaces/Storage/Directory.h"
 #include "WinDurango.Common/Interfaces/Storage/Directory.h"
 #include "WinDurango.Common/WinDurango.h"
+#include "WinDurango.Implementation.WinRT/Interfaces/Storage/Directory.h"
 
 std::shared_ptr<wd::common::WinDurango> winDurango;
 
@@ -67,7 +67,8 @@ HRESULT XWinePatchImport(_In_opt_ HMODULE Module, _In_ HMODULE ImportModule, _In
     DWORD protect;
     PIMAGE_THUNK_DATA pThunk;
     HRESULT hr = XWineGetImport(Module, ImportModule, Import, &pThunk);
-    if (FAILED(hr)) return hr;
+    if (FAILED(hr))
+        return hr;
 
     if (!VirtualProtect(&pThunk->u1.Function, sizeof(ULONG_PTR), PAGE_READWRITE, &protect))
         return GetLastError();
@@ -128,11 +129,13 @@ inline HRESULT WINAPI EraRoGetActivationFactory(HSTRING classId, REFIID iid, voi
 HRESULT WINAPI GetActivationFactoryRedirect(PCWSTR str, REFIID riid, void **ppFactory)
 {
     winDurango = wd::common::WinDurango::GetInstance();
-    if (!winDurango->inited()) {
-        #ifndef CROSS_PLATFORM
-            std::shared_ptr<wd::common::interfaces::storage::Directory> rootDir = std::make_shared<wd::impl::winrt::interfaces::storage::WinRTDirectory>("");
-            winDurango->Init(rootDir);
-        #endif
+    if (!winDurango->inited())
+    {
+#ifndef CROSS_PLATFORM
+        std::shared_ptr<wd::common::interfaces::storage::Directory> rootDir =
+            std::make_shared<wd::impl::winrt::interfaces::storage::WinRTDirectory>("");
+        winDurango->Init(rootDir);
+#endif
     }
 
     HRESULT hr = 0;

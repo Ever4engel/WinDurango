@@ -1,17 +1,19 @@
 #pragma once
-#include <Windows.h>
 #include "Windows.Xbox.Media.GameTransportControls.g.h"
+#include <Windows.h>
 
-namespace winrt::Windows::Xbox::Media::implementation {
-    struct GameTransportControls : GameTransportControlsT<GameTransportControls> {
+namespace winrt::Windows::Xbox::Media::implementation
+{
+    struct GameTransportControls : GameTransportControlsT<GameTransportControls>
+    {
         GameTransportControls() = default;
 
         hstring Title();
-        void Title(hstring const& value);
+        void Title(hstring const &value);
         hstring Subtitle();
-        void Subtitle(hstring const& value);
+        void Subtitle(hstring const &value);
         winrt::Windows::Xbox::Media::GamePlaybackStatus PlaybackStatus();
-        void PlaybackStatus(winrt::Windows::Xbox::Media::GamePlaybackStatus const& value);
+        void PlaybackStatus(winrt::Windows::Xbox::Media::GamePlaybackStatus const &value);
         winrt::Windows::Xbox::Media::SoundLevel SoundLevel();
         bool IsEnabled();
         void IsEnabled(bool value);
@@ -25,11 +27,18 @@ namespace winrt::Windows::Xbox::Media::implementation {
         void IsViewEnabled(bool value);
         bool IsBackEnabled();
         void IsBackEnabled(bool value);
-        winrt::event_token add_ButtonPressed(winrt::Windows::Foundation::TypedEventHandler<winrt::Windows::Xbox::Media::GameTransportControls, winrt::Windows::Xbox::Media::GameTransportControlsButtonPressedEventArgs> const& handler);
-        void remove_ButtonPressed(winrt::event_token const& token);
-        winrt::event_token add_PropertyChanged(winrt::Windows::Foundation::TypedEventHandler<winrt::Windows::Xbox::Media::GameTransportControls, winrt::Windows::Xbox::Media::GameTransportControlsPropertyChangedEventArgs> const& handler);
-        void remove_PropertyChanged(winrt::event_token const& token);
-    private:
+        winrt::event_token add_ButtonPressed(
+            winrt::Windows::Foundation::TypedEventHandler<
+                winrt::Windows::Xbox::Media::GameTransportControls,
+                winrt::Windows::Xbox::Media::GameTransportControlsButtonPressedEventArgs> const &handler);
+        void remove_ButtonPressed(winrt::event_token const &token);
+        winrt::event_token add_PropertyChanged(
+            winrt::Windows::Foundation::TypedEventHandler<
+                winrt::Windows::Xbox::Media::GameTransportControls,
+                winrt::Windows::Xbox::Media::GameTransportControlsPropertyChangedEventArgs> const &handler);
+        void remove_PropertyChanged(winrt::event_token const &token);
+
+      private:
         hstring _title;
         hstring _subtitle;
         winrt::Windows::Xbox::Media::GamePlaybackStatus _playbackStatus;
@@ -39,7 +48,13 @@ namespace winrt::Windows::Xbox::Media::implementation {
         bool _isMenuEnabled;
         bool _isViewEnabled;
         bool _isBackEnabled;
-        winrt::event<winrt::Windows::Foundation::TypedEventHandler<winrt::Windows::Xbox::Media::GameTransportControls, winrt::Windows::Xbox::Media::GameTransportControlsButtonPressedEventArgs>> e_ButtonPressedHandler;
-        winrt::event<winrt::Windows::Foundation::TypedEventHandler<winrt::Windows::Xbox::Media::GameTransportControls, winrt::Windows::Xbox::Media::GameTransportControlsPropertyChangedEventArgs>> e_PropertyChangedHandler;
+        winrt::event<winrt::Windows::Foundation::TypedEventHandler<
+            winrt::Windows::Xbox::Media::GameTransportControls,
+            winrt::Windows::Xbox::Media::GameTransportControlsButtonPressedEventArgs>>
+            e_ButtonPressedHandler;
+        winrt::event<winrt::Windows::Foundation::TypedEventHandler<
+            winrt::Windows::Xbox::Media::GameTransportControls,
+            winrt::Windows::Xbox::Media::GameTransportControlsPropertyChangedEventArgs>>
+            e_PropertyChangedHandler;
     };
-}
+} // namespace winrt::Windows::Xbox::Media::implementation

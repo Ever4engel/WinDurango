@@ -27,84 +27,83 @@
 
 namespace wil
 {
-// Adopted from cppwinrt
-struct notifiable_module_lock_base
-{
-    notifiable_module_lock_base() = default;
-
-    notifiable_module_lock_base(uint32_t count) : m_count(count)
+    // Adopted from cppwinrt
+    struct notifiable_module_lock_base
     {
-    }
+        notifiable_module_lock_base() = default;
 
-    uint32_t operator=(uint32_t count) noexcept
-    {
-        return m_count = count;
-    }
-
-    uint32_t operator++() noexcept
-    {
-        return m_count.fetch_add(1, std::memory_order_relaxed) + 1;
-    }
-
-    uint32_t operator--() noexcept
-    {
-        auto const remaining = m_count.fetch_sub(1, std::memory_order_release) - 1;
-
-        if (remaining == 0)
+        notifiable_module_lock_base(uint32_t count) : m_count(count)
         {
-            std::atomic_thread_fence(std::memory_order_acquire);
-            if (notifier) // Protect against callback not being set yet
+        }
+
+        uint32_t operator=(uint32_t count) noexcept
+        {
+            return m_count = count;
+        }
+
+        uint32_t operator++() noexcept
+        {
+            return m_count.fetch_add(1, std::memory_order_relaxed) + 1;
+        }
+
+        uint32_t operator--() noexcept
+        {
+            auto const remaining = m_count.fetch_sub(1, std::memory_order_release) - 1;
+
+            if (remaining == 0)
             {
-                notifier();
+                std::atomic_thread_fence(std::memory_order_acquire);
+                if (notifier) // Protect against callback not being set yet
+                {
+                    notifier();
+                }
             }
+            else if (remaining < 0)
+            {
+                abort();
+            }
+
+            return remaining;
         }
-        else if (remaining < 0)
+
+        operator uint32_t() const noexcept
         {
-            abort();
+            return m_count;
         }
 
-        return remaining;
-    }
+        template <typename Func> void set_notifier(Func &&func)
+        {
+            notifier = std::forward<Func>(func);
+        }
 
-    operator uint32_t() const noexcept
+        void set_notifier(std::nullptr_t) noexcept
+        {
+            notifier = nullptr;
+        }
+
+      private:
+        std::atomic<int32_t> m_count{0};
+        std::function<void()> notifier{};
+    };
+
+    struct notifiable_module_lock final : notifiable_module_lock_base
     {
-        return m_count;
-    }
-
-    template <typename Func>
-    void set_notifier(Func&& func)
-    {
-        notifier = std::forward<Func>(func);
-    }
-
-    void set_notifier(std::nullptr_t) noexcept
-    {
-        notifier = nullptr;
-    }
-
-private:
-    std::atomic<int32_t> m_count{0};
-    std::function<void()> notifier{};
-};
-
-struct notifiable_module_lock final : notifiable_module_lock_base
-{
-    static notifiable_module_lock& instance() noexcept
-    {
-        static notifiable_module_lock lock;
-        return lock;
-    }
-};
+        static notifiable_module_lock &instance() noexcept
+        {
+            static notifiable_module_lock lock;
+            return lock;
+        }
+    };
 } // namespace wil
 
 #ifndef WIL_CPPWINRT_COM_SERVER_CUSTOM_MODULE_LOCK
 
 namespace winrt
 {
-auto& get_module_lock()
-{
-    return wil::notifiable_module_lock::instance();
-}
+    auto &get_module_lock()
+    {
+        return wil::notifiable_module_lock::instance();
+    }
 } // namespace winrt
 
 #endif

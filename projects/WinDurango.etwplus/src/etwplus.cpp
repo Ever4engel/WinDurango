@@ -3,12 +3,9 @@
 
 #include "etwplus.h"
 
-EXTERN_C ULONG WINAPI EtxEventWrite(
-    _In_ PETX_EVENT_DESCRIPTOR EventDescriptor,
-    _In_ PETX_PROVIDER_DESCRIPTOR ProviderDescriptor,
-    _In_ REGHANDLE RegHandle,
-    _In_ ULONG UserDataCount,
-    _In_opt_ PEVENT_DATA_DESCRIPTOR UserData)
+EXTERN_C ULONG WINAPI EtxEventWrite(_In_ PETX_EVENT_DESCRIPTOR EventDescriptor,
+                                    _In_ PETX_PROVIDER_DESCRIPTOR ProviderDescriptor, _In_ REGHANDLE RegHandle,
+                                    _In_ ULONG UserDataCount, _In_opt_ PEVENT_DATA_DESCRIPTOR UserData)
 {
     UNREFERENCED_PARAMETER(EventDescriptor);
     UNREFERENCED_PARAMETER(ProviderDescriptor);
@@ -18,10 +15,8 @@ EXTERN_C ULONG WINAPI EtxEventWrite(
     return ERROR_SUCCESS;
 }
 
-EXTERN_C void WINAPI EtxFillCommonFields_v7(
-    _Out_ PEVENT_DATA_DESCRIPTOR EventData,
-    _Out_ PUINT8 Scratch,
-    _In_ SIZE_T ScratchSize)
+EXTERN_C void WINAPI EtxFillCommonFields_v7(_Out_ PEVENT_DATA_DESCRIPTOR EventData, _Out_ PUINT8 Scratch,
+                                            _In_ SIZE_T ScratchSize)
 {
     UNREFERENCED_PARAMETER(EventData);
     UNREFERENCED_PARAMETER(Scratch);
@@ -29,9 +24,7 @@ EXTERN_C void WINAPI EtxFillCommonFields_v7(
     ZeroMemory(EventData, sizeof(*EventData));
 }
 
-EXTERN_C ULONG WINAPI EtxRegister(
-    _In_ PETX_PROVIDER_DESCRIPTOR ProviderDescriptor,
-    _Out_ PREGHANDLE RegHandle)
+EXTERN_C ULONG WINAPI EtxRegister(_In_ PETX_PROVIDER_DESCRIPTOR ProviderDescriptor, _Out_ PREGHANDLE RegHandle)
 {
     UNREFERENCED_PARAMETER(ProviderDescriptor);
     *RegHandle = 0;
@@ -46,9 +39,7 @@ EXTERN_C void WINAPI EtxSuspendUploading()
 {
 }
 
-EXTERN_C ULONG WINAPI EtxUnregister(
-    _In_ PETX_PROVIDER_DESCRIPTOR ProviderDescriptor,
-    _In_ PREGHANDLE RegHandle)
+EXTERN_C ULONG WINAPI EtxUnregister(_In_ PETX_PROVIDER_DESCRIPTOR ProviderDescriptor, _In_ PREGHANDLE RegHandle)
 {
     UNREFERENCED_PARAMETER(ProviderDescriptor);
     UNREFERENCED_PARAMETER(RegHandle);

@@ -1,16 +1,15 @@
 #pragma once
-#include <winrt/Windows.ApplicationModel.h>
-#include <windows.h>
-#include <filesystem>
 #include <Shlwapi.h>
-#include <winrt/windows.storage.provider.h>
-#include <windows.applicationmodel.core.h>
-#include <string>
-#include <locale>
 #include <codecvt>
+#include <filesystem>
+#include <locale>
+#include <string>
+#include <windows.applicationmodel.core.h>
+#include <windows.h>
+#include <winrt/Windows.ApplicationModel.h>
+#include <winrt/windows.storage.provider.h>
 
-
-//Provided by XWine1, all credits to them.
+// Provided by XWine1, all credits to them.
 //(This is from the old impl but we can use it just fine).
 HRESULT XWineGetImport(_In_opt_ HMODULE Module, _In_ HMODULE ImportModule, _In_ LPCSTR Import,
                        _Out_ PIMAGE_THUNK_DATA *pThunk);

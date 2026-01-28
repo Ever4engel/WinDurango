@@ -22,8 +22,7 @@ void RefreshWasapiDeviceList()
     MessageBoxW(nullptr, L"TODO: MMDevAPI::RefreshWasapiDeviceList", L"TODO:", MB_OK | MB_ICONERROR);
 }
 
-
-//PC Exports
+// PC Exports
 #define MMDEVAPI_EXPORT(Name) __pragma(comment(linker, "/export:" #Name "=C:\\WINDOWS\\System32\\MMDevAPI." #Name))
 #define MMDEVAPI_EXPORT_ORDINAL(Name, Ordinal)                                                                         \
     __pragma(comment(linker, "/export:" #Name "=C:\\WINDOWS\\System32\\MMDevAPI." #Name ",@" #Ordinal))

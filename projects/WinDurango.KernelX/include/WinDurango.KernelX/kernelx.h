@@ -23,11 +23,14 @@
 #define MEM_PHYSICAL_SIZE 0x400000000ULL // 16 GiB
 static std::bitset<(MEM_PHYSICAL_SIZE >> 16)> XwpPhysicalPages;
 static SRWLOCK XwpPhysicalMemoryLock = SRWLOCK_INIT;
-static HANDLE XwpPhysicalMemory = CreateFileMapping2(INVALID_HANDLE_VALUE, nullptr, FILE_MAP_READ | FILE_MAP_WRITE, PAGE_READWRITE, SEC_RESERVE, MEM_PHYSICAL_SIZE, nullptr, nullptr, 0);
+static HANDLE XwpPhysicalMemory =
+    CreateFileMapping2(INVALID_HANDLE_VALUE, nullptr, FILE_MAP_READ | FILE_MAP_WRITE, PAGE_READWRITE, SEC_RESERVE,
+                       MEM_PHYSICAL_SIZE, nullptr, nullptr, 0);
 
 // ESRAM stuff
 #define MEM_ESRAM_SIZE 0x2000000ULL // 32 MiB
-static HANDLE XwpEsramMemory = CreateFileMapping2(INVALID_HANDLE_VALUE, nullptr, FILE_MAP_READ | FILE_MAP_WRITE, PAGE_READWRITE, SEC_RESERVE, MEM_ESRAM_SIZE, nullptr, nullptr, 0);
+static HANDLE XwpEsramMemory = CreateFileMapping2(INVALID_HANDLE_VALUE, nullptr, FILE_MAP_READ | FILE_MAP_WRITE,
+                                                  PAGE_READWRITE, SEC_RESERVE, MEM_ESRAM_SIZE, nullptr, nullptr, 0);
 
 typedef struct _MAPPABLE_MEM
 {
@@ -210,6 +213,5 @@ EXTERN_C void WINAPI XMemSetAllocationHooks(_In_opt_ PXMEMALLOC_ROUTINE pAllocRo
 CRITICAL_SECTION XmpAllocationHookLock;
 static PXMEMALLOC_ROUTINE XmpAllocRoutine = XMemAllocDefault;
 static PXMEMFREE_ROUTINE XmpFreeRoutine = XMemFreeDefault;
-
 
 #endif // WINDURANGO_KERNEL_H

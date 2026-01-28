@@ -1,6 +1,6 @@
 #pragma once
-#include <d3d11.h> 
-#include <initguid.h>  
+#include <d3d11.h>
+#include <initguid.h>
 
 extern const IID IID_IPrivateData;
 extern const IID IID_IGraphicsUnknown;

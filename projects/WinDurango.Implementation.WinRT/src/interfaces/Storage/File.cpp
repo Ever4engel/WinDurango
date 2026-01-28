@@ -1,53 +1,70 @@
 #include "interfaces/Storage/File.h"
 
-namespace wd::impl::winrt::interfaces::storage {
-    bool WinRTFile::open() {
-        if (file != nullptr) {
+namespace wd::impl::winrt::interfaces::storage
+{
+    bool WinRTFile::open()
+    {
+        if (file != nullptr)
+        {
             return false;
         }
-        try {
+        try
+        {
             StorageFolder sf = ApplicationData::Current().LocalFolder();
 
-            for (const auto& part : path.parent_path()) {
+            for (const auto &part : path.parent_path())
+            {
                 hstring partStr = hstring(part.wstring());
                 sf = sf.GetFolderAsync(partStr).get();
             }
-            if (!sf) {
+            if (!sf)
+            {
                 return false;
             }
 
             StorageFile npFile = sf.GetFileAsync(hstring(path.filename().wstring())).get();
             file = npFile;
-            if (!npFile) {
+            if (!npFile)
+            {
                 return false;
             }
-        } catch (const hresult_error& ex) {
+        }
+        catch (const hresult_error &ex)
+        {
             return false;
         }
         return false;
     }
 
-    bool WinRTFile::create() {
-        if (file != nullptr) {
+    bool WinRTFile::create()
+    {
+        if (file != nullptr)
+        {
             return false;
         }
-        try {
+        try
+        {
             StorageFolder sf = ApplicationData::Current().LocalFolder();
 
-            for (const auto& part : path.parent_path()) {
+            for (const auto &part : path.parent_path())
+            {
                 hstring partStr = hstring(part.wstring());
                 sf = sf.GetFolderAsync(partStr).get();
             }
-            if (!sf) {
+            if (!sf)
+            {
                 return false;
             }
 
             file = sf.CreateFileAsync(hstring(path.filename().wstring()), CreationCollisionOption::OpenIfExists).get();
-            if (!file) {
+            if (!file)
+            {
                 return false;
             }
             return true;
-        } catch (const hresult_error& ex) {
+        }
+        catch (const hresult_error &ex)
+        {
             return false;
         }
         return false;
@@ -55,88 +72,117 @@ namespace wd::impl::winrt::interfaces::storage {
     /*
      * btw these docs are pretty useful
      * https://learn.microsoft.com/en-us/windows/uwp/get-started/fileio-learning-track
-    */
-    std::string WinRTFile::read() {
-        if (file == nullptr) {
+     */
+    std::string WinRTFile::read()
+    {
+        if (file == nullptr)
+        {
             return "Failed";
         }
-        try {
+        try
+        {
             return to_string(FileIO::ReadTextAsync(file).get());
-        } catch (const hresult_error& ex) {
+        }
+        catch (const hresult_error &ex)
+        {
             return "Failed";
         }
         return "Failed";
     }
 
-    void WinRTFile::operator<<(std::string data) {
-        if (file == nullptr) {
+    void WinRTFile::operator<<(std::string data)
+    {
+        if (file == nullptr)
+        {
             return;
         }
-        try {
+        try
+        {
             FileIO::WriteTextAsync(file, to_hstring(data)).get();
-        } catch (const hresult_error& ex) {
+        }
+        catch (const hresult_error &ex)
+        {
             return;
         }
     }
-    
-    bool WinRTFile::close() {
-        if (file == nullptr) {
+
+    bool WinRTFile::close()
+    {
+        if (file == nullptr)
+        {
             return false;
         }
         file = nullptr;
         return false;
     }
 
-    std::filesystem::path WinRTFile::filepath() {
+    std::filesystem::path WinRTFile::filepath()
+    {
         return path;
     }
 
-    std::filesystem::path WinRTFile::fullfilepath() {
+    std::filesystem::path WinRTFile::fullfilepath()
+    {
         StorageFolder sf = ApplicationData::Current().LocalFolder();
-        std::filesystem::path rootPath { sf.Path().c_str() };
+        std::filesystem::path rootPath{sf.Path().c_str()};
 
         return rootPath / path;
     }
 
-    bool WinRTFile::rename(std::string name) {
-        if (file == nullptr) {
+    bool WinRTFile::rename(std::string name)
+    {
+        if (file == nullptr)
+        {
             return false;
         }
-        try {
+        try
+        {
             file.RenameAsync(to_hstring(name), NameCollisionOption::GenerateUniqueName).get();
             path.replace_filename(name);
             return true;
-        } catch (const hresult_error& ex) {
+        }
+        catch (const hresult_error &ex)
+        {
             return false;
         }
         return false;
     }
 
-    bool WinRTFile::remove() {
-        if (file == nullptr) {
+    bool WinRTFile::remove()
+    {
+        if (file == nullptr)
+        {
             return false;
         }
-        try {
+        try
+        {
             file.DeleteAsync().get();
             return true;
-        } catch (const hresult_error& ex) {
+        }
+        catch (const hresult_error &ex)
+        {
             return false;
         }
         return false;
     }
 
-    bool WinRTFile::move(std::filesystem::path targetPath) {
-        if (file == nullptr) {
+    bool WinRTFile::move(std::filesystem::path targetPath)
+    {
+        if (file == nullptr)
+        {
             return false;
         }
-        try {
+        try
+        {
             StorageFolder target = ApplicationData::Current().LocalFolder();
 
-            for (const auto& part : targetPath.parent_path()) {
+            for (const auto &part : targetPath.parent_path())
+            {
                 hstring partStr = hstring(part.wstring());
                 target = target.GetFolderAsync(partStr).get();
             }
-            if (!target) {
+            if (!target)
+            {
                 return false;
             }
 
@@ -146,32 +192,41 @@ namespace wd::impl::winrt::interfaces::storage {
             path = targetPath;
             path.replace_filename(filename);
             return true;
-        } catch (const hresult_error& ex) {
+        }
+        catch (const hresult_error &ex)
+        {
             return false;
         }
         return false;
     }
 
-    bool WinRTFile::copy(std::filesystem::path targetPath) {
-        if (file == nullptr) {
+    bool WinRTFile::copy(std::filesystem::path targetPath)
+    {
+        if (file == nullptr)
+        {
             return false;
         }
-        try {
+        try
+        {
             StorageFolder target = ApplicationData::Current().LocalFolder();
 
-            for (const auto& part : targetPath.parent_path()) {
+            for (const auto &part : targetPath.parent_path())
+            {
                 hstring partStr = hstring(part.wstring());
                 target = target.GetFolderAsync(partStr).get();
             }
-            if (!target) {
+            if (!target)
+            {
                 return false;
             }
 
             file.CopyAsync(target).get();
             return true;
-        } catch (const hresult_error& ex) {
+        }
+        catch (const hresult_error &ex)
+        {
             return false;
         }
         return false;
     }
-}
+} // namespace wd::impl::winrt::interfaces::storage
