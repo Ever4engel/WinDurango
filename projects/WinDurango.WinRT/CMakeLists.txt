@@ -38,9 +38,9 @@ execute_process(
         -out "${CMAKE_CURRENT_SOURCE_DIR}\\Generated Files")
 
 set(FILES
-    "src/Windows/Xbox/Media/GameTransportControls.cpp"
-    "src/Windows/Xbox/Media/GameTransportControlsButtonPressedEventArgs.cpp"
-    "src/Windows/Xbox/Media/GameTransportControlsPropertyChangedEventArgs.cpp"
+    "src/Windows/Xbox/Media/Windows.Xbox.Media.GameTransportControls.cpp"
+    "src/Windows/Xbox/Media/Windows.Xbox.Media.GameTransportControlsButtonPressedEventArgs.cpp"
+    "src/Windows/Xbox/Media/Windows.Xbox.Media.GameTransportControlsPropertyChangedEventArgs.cpp"
     "src/WinDurangoWinRT.cpp"
 )
 
@@ -54,20 +54,12 @@ add_library(WinDurango.WinRT SHARED ${FILES} ${WINRT_FILES} WinDurango.WinRT.def
 target_include_directories(WinDurango.WinRT PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/WinDurango.WinRT"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/WinDurango.WinRT/Windows/Xbox/Media"
     "${CMAKE_CURRENT_SOURCE_DIR}/Generated Files"
     "${CMAKE_SOURCE_DIR}/projects/WinDurango.Common/include"
 )
 
-set_property(
-  TARGET WinDurango.WinRT
-  PROPERTY VS_PACKAGE_REFERENCES
-  "Microsoft.Windows.CppWinRT_2.0.250303.1"
-  "Microsoft.WindowsAppSDK_1.4.231115000"
-  "Microsoft.Windows.SDK.BuildTools_10.0.22621.756"
-  "Microsoft.Windows.ImplementationLibrary_1.0.230629.1"
-)
-
-target_link_libraries(WinDurango.WinRT PRIVATE WinDurango.Common Microsoft::CppWinRT WindowsApp)
+target_link_libraries(WinDurango.WinRT PRIVATE WinDurango.Common Microsoft::CppWinRT windowsapp runtimeobject)
 
 target_compile_definitions(WinDurango.WinRT PUBLIC
     WINDURANGO_WINRT_COMPILER_NAME="${CMAKE_CXX_COMPILER_ID}"
@@ -79,7 +71,7 @@ target_compile_definitions(WinDurango.WinRT PUBLIC
 
 set_target_properties(WinDurango.WinRT PROPERTIES LINKER_LANGUAGE CXX)
 
-target_compile_definitions(WinDurango.WinRT PRIVATE _WINRT_DLL WIN32_LEAN_AND_MEAN WINRT_LEAN_AND_MEAN)
+target_compile_definitions(WinDurango.WinRT PRIVATE WINRT_DLL WIN32_LEAN_AND_MEAN WINRT_LEAN_AND_MEAN)
 
 if (WINRT_USE_CROSS_PLATFORM STREQUAL ON)
     target_link_libraries(WinDurango.WinRT PUBLIC WinDurango.Implementation.Native)

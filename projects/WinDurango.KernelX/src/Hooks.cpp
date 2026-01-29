@@ -4,6 +4,7 @@
 #include "WinDurango.Implementation.WinRT/Interfaces/Storage/Directory.h"
 
 std::shared_ptr<wd::common::WinDurango> winDurango;
+GetActivationFactory_t p_GetActivationFactory;
 
 HRESULT XWineGetImport(_In_opt_ HMODULE Module, _In_ HMODULE ImportModule, _In_ LPCSTR Import,
                        _Out_ PIMAGE_THUNK_DATA *pThunk)
@@ -112,6 +113,10 @@ HMODULE GetRuntimeModule()
     return hModule;
 }
 
+/*
+ * Dynamicly load a func
+ * https://stackoverflow.com/questions/8696653/dynamically-load-a-function-from-a-dll
+*/
 inline HRESULT WINAPI EraRoGetActivationFactory(HSTRING classId, REFIID iid, void **factory)
 {
     const wchar_t *rawString = WindowsGetStringRawBuffer(classId, nullptr);
@@ -122,6 +127,34 @@ inline HRESULT WINAPI EraRoGetActivationFactory(HSTRING classId, REFIID iid, voi
     std::string rss(rsws.begin(), rsws.end());
 
     winDurango->log.Log("WinDurango::KernelX", "EraRoGetActivationFactory: {}", rss);
+
+    if (!p_GetActivationFactory) 
+    {
+        HINSTANCE hGetActivationFactoryDLL = LoadLibrary("winrt_x.dll");
+
+        if (!hGetActivationFactoryDLL) 
+        {
+            winDurango->log.Error("WinDurango::KernelX", "Failed to load winrt_x.dll");
+            return EXIT_FAILURE;
+        }
+
+        p_GetActivationFactory = (GetActivationFactory_t)GetProcAddress(hGetActivationFactoryDLL, "GetActivationFactory");
+
+        if (!p_GetActivationFactory) 
+        {
+            winDurango->log.Error("WinDurango::KernelX", "Failed to load GetActivationFactory");
+            return EXIT_FAILURE;
+        }
+    }
+
+    Microsoft::WRL::ComPtr<IActivationFactory> i_factory;
+
+    HRESULT hr = p_GetActivationFactory(classId, i_factory.GetAddressOf());
+
+    if (SUCCEEDED(hr))
+    {
+        return i_factory.CopyTo(iid, factory);
+    }
 
     return E_NOINTERFACE;
 }

@@ -1,6 +1,9 @@
 #pragma once
-#include "Windows.Xbox.Media.GameTransportControls.g.h"
 #include <Windows.h>
+#include <winrt/base.h>
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Xbox.Media.h>
+#include "Windows.Xbox.Media.GameTransportControls.g.h"
 
 namespace winrt::Windows::Xbox::Media::implementation
 {
@@ -39,15 +42,15 @@ namespace winrt::Windows::Xbox::Media::implementation
         void remove_PropertyChanged(winrt::event_token const &token);
 
       private:
-        hstring _title;
-        hstring _subtitle;
-        winrt::Windows::Xbox::Media::GamePlaybackStatus _playbackStatus;
-        bool _isEnabled;
-        bool _isPlayEnabled;
-        bool _isPauseEnabled;
-        bool _isMenuEnabled;
-        bool _isViewEnabled;
-        bool _isBackEnabled;
+        hstring _title = L"";
+        hstring _subtitle = L"";
+        winrt::Windows::Xbox::Media::GamePlaybackStatus _playbackStatus = winrt::Windows::Xbox::Media::GamePlaybackStatus::Closed;
+        bool _isEnabled = true;
+        bool _isPlayEnabled = true;
+        bool _isPauseEnabled = true;
+        bool _isMenuEnabled = true;
+        bool _isViewEnabled = true;
+        bool _isBackEnabled = true;
         winrt::event<winrt::Windows::Foundation::TypedEventHandler<
             winrt::Windows::Xbox::Media::GameTransportControls,
             winrt::Windows::Xbox::Media::GameTransportControlsButtonPressedEventArgs>>
@@ -57,4 +60,11 @@ namespace winrt::Windows::Xbox::Media::implementation
             winrt::Windows::Xbox::Media::GameTransportControlsPropertyChangedEventArgs>>
             e_PropertyChangedHandler;
     };
-} // namespace winrt::Windows::Xbox::Media::implementation
+}
+
+namespace winrt::Windows::Xbox::Media::factory_implementation
+{
+	struct GameTransportControls : GameTransportControlsT<GameTransportControls, implementation::GameTransportControls>
+	{
+	};
+}

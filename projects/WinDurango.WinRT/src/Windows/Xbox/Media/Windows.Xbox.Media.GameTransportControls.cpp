@@ -1,4 +1,4 @@
-#include "Windows/Xbox/Media/GameTransportControls.h"
+#include "Windows.Xbox.Media.GameTransportControls.h"
 #include "WinDurangoWinRT.h"
 
 namespace winrt::Windows::Xbox::Media::implementation

@@ -39,6 +39,11 @@ namespace Windows.Xbox.Media
         Unknown
     };
 
+    [contractversion(1.0)]
+    apicontract GameTransportControlsContract
+    {
+    }
+
     //Placeholder GUID, correct one is unknown at the moment.
     [uuid(EAE84482-F678-4CB7-885C-821EDDFD129F)]
     [version(1)]
@@ -57,9 +62,10 @@ namespace Windows.Xbox.Media
          [propget] HRESULT Button([out][retval] Windows.Xbox.Media.GameTransportControlsButton* value);
     }
 
+    [contract(Windows.Xbox.Media.GameTransportControlsContract, 1.0)]
+    [exclusiveto(Windows.Xbox.Media.GameTransportControls)]
     [uuid(F5BA60D7-9303-44CD-AC0C-4E532702CD00)]
     [version(1)]
-    [exclusiveto(Windows.Xbox.Media.GameTransportControls)]
     interface IGameTransportControls : IInspectable
     {
         [propget] HRESULT Title([out][retval] HSTRING* value);
@@ -100,15 +106,23 @@ namespace Windows.Xbox.Media
         HRESULT remove_PropertyChanged([in] Windows.Foundation.EventRegistrationToken token);
     }
 
+    [activatable(Windows.Xbox.Media.GameTransportControlsContract, 1.0)]
+    [contract(Windows.Xbox.Media.GameTransportControlsContract, 1.0)]
     [version(1)]
     [default_interface]
-    runtimeclass GameTransportControls : IGameTransportControls {}
+    runtimeclass GameTransportControls {
+        [default] interface Windows.Xbox.Media.IGameTransportControls;
+    }
 
     [version(1)]
     [default_interface]
-    runtimeclass GameTransportControlsButtonPressedEventArgs : Windows.Xbox.Media.IGameTransportControlsButtonPressedEventArgs {}
+    runtimeclass GameTransportControlsButtonPressedEventArgs {
+        [default] interface Windows.Xbox.Media.IGameTransportControlsButtonPressedEventArgs;
+    }
 
     [version(1)]
     [default_interface]
-    runtimeclass GameTransportControlsPropertyChangedEventArgs : Windows.Xbox.Media.IGameTransportControlsPropertyChangedEventArgs {}
+    runtimeclass GameTransportControlsPropertyChangedEventArgs {
+        [default] interface Windows.Xbox.Media.IGameTransportControlsPropertyChangedEventArgs;
+    }
 }

@@ -1,4 +1,4 @@
-#include "Windows/Xbox/Media/GameTransportControlsPropertyChangedEventArgs.h"
+#include "Windows.Xbox.Media.GameTransportControlsPropertyChangedEventArgs.h"
 #include "WinDurangoWinRT.h"
 
 namespace winrt::Windows::Xbox::Media::implementation

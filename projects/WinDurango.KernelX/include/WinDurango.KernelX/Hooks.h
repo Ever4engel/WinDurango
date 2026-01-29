@@ -8,6 +8,9 @@
 #include <windows.h>
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/windows.storage.provider.h>
+#include <wrl/client.h>
+
+typedef int32_t (__stdcall *GetActivationFactory_t)(HSTRING classId, IActivationFactory** factory);
 
 // Provided by XWine1, all credits to them.
 //(This is from the old impl but we can use it just fine).
