@@ -2,6 +2,9 @@
 #include "WinDurango.Common/Interfaces/Storage/Directory.h"
 #include "WinDurango.Common/WinDurango.h"
 #include "WinDurango.Implementation.WinRT/Interfaces/Storage/Directory.h"
+#include "CurrentApp.h"
+
+using namespace ABI::Windows::ApplicationModel::Store;
 
 std::shared_ptr<wd::common::WinDurango> winDurango;
 GetActivationFactory_t p_GetActivationFactory;
@@ -113,10 +116,19 @@ HMODULE GetRuntimeModule()
     return hModule;
 }
 
-/*
- * Dynamicly load a func
- * https://stackoverflow.com/questions/8696653/dynamically-load-a-function-from-a-dll
-*/
+template <typename T> inline T GetVTableMethod(void *table_base, std::uintptr_t index)
+{
+    return (T)((*reinterpret_cast<std::uintptr_t **>(table_base))[index]);
+}
+
+HRESULT __stdcall EraAppActivateInstance(IActivationFactory *thisptr, IInspectable **instance)
+{
+    *instance = reinterpret_cast<ILicenseInformation *>(
+        new EraLicenseInformationWrapper(reinterpret_cast<ILicenseInformation *>(*instance)));
+    return S_OK;
+}
+
+
 inline HRESULT WINAPI EraRoGetActivationFactory(HSTRING classId, REFIID iid, void **factory)
 {
     const wchar_t *rawString = WindowsGetStringRawBuffer(classId, nullptr);
@@ -127,6 +139,21 @@ inline HRESULT WINAPI EraRoGetActivationFactory(HSTRING classId, REFIID iid, voi
     std::string rss(rsws.begin(), rsws.end());
 
     winDurango->log.Log("WinDurango::KernelX", "EraRoGetActivationFactory: {}", rss);
+
+    if (IsClassName(classId, "Windows.ApplicationModel.Store.CurrentApp"))
+    {
+        HRESULT hr = RoGetActivationFactory(classId, iid, factory);
+
+        if (FAILED(hr))
+            return hr;
+
+        TrueActivateInstance = GetVTableMethod<decltype(TrueActivateInstance)>(*factory, 6);
+        
+        DetourTransactionBegin();
+        DetourUpdateThread(GetCurrentThread());
+        DetourAttach(reinterpret_cast<PVOID *>(&TrueActivateInstance), reinterpret_cast<PVOID>(EraAppActivateInstance));
+        DetourTransactionCommit();
+    }
 
     if (!p_GetActivationFactory) 
     {

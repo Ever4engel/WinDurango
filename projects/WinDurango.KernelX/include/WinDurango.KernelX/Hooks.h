@@ -1,4 +1,5 @@
 #pragma once
+#pragma comment(lib, "runtimeobject.lib")
 #include <Shlwapi.h>
 #include <codecvt>
 #include <filesystem>
@@ -9,6 +10,7 @@
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/windows.storage.provider.h>
 #include <wrl/client.h>
+#include <detours.h>
 
 typedef int32_t (__stdcall *GetActivationFactory_t)(HSTRING classId, IActivationFactory** factory);
 
@@ -21,3 +23,18 @@ HRESULT PatchNeededImports(_In_opt_ HMODULE Module, _In_ HMODULE ImportModule, _
 HMODULE GetRuntimeModule();
 inline HRESULT WINAPI EraRoGetActivationFactory(HSTRING classId, REFIID iid, void **factory);
 HRESULT WINAPI GetActivationFactoryRedirect(PCWSTR str, REFIID riid, void **ppFactory);
+
+HRESULT STDMETHODCALLTYPE EraAppActivateInstance(IActivationFactory *thisptr, IInspectable **instance);
+
+template <typename T> inline T GetVTableMethod(void *table_base, std::uintptr_t index);
+
+inline bool IsClassName(HSTRING classId, const char *classIdName)
+{
+    const wchar_t *classIdString = WindowsGetStringRawBuffer(classId, nullptr);
+    std::wstring classIdWString(classIdString);
+    const std::string classIdStringUTF8(classIdWString.begin(), classIdWString.end());
+
+    return (classIdStringUTF8 == classIdName);
+}
+
+HRESULT(WINAPI *TrueActivateInstance)(IActivationFactory *thisptr, IInspectable **instance) = nullptr;
