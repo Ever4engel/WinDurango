@@ -44,8 +44,8 @@ namespace Windows.Xbox.Media
     {
     }
 
-    //Placeholder GUID, correct one is unknown at the moment.
-    [uuid(EAE84482-F678-4CB7-885C-821EDDFD129F)]
+    // GUID from @Zombie
+    [uuid(D0CA0936-339B-4CB3-8EEB-737607F56E08)]
     [version(1)]
     [exclusiveto(Windows.Xbox.Media.GameTransportControlsPropertyChangedEventArgs)]
     interface IGameTransportControlsPropertyChangedEventArgs : IInspectable
@@ -53,8 +53,8 @@ namespace Windows.Xbox.Media
          [propget] HRESULT Property([out][retval] Windows.Xbox.Media.GameTransportControlsProperty* value);
     }
 
-    //Placeholder GUID, correct one is unknown at the moment.
-    [uuid(4E9960F2-2785-4B88-986F-04BDA2B004B6)]
+    // GUID from @Zombie
+    [uuid(9BD12C1F-24FE-4790-8C2C-8FB6A5727BC2)]
     [version(1)]
     [exclusiveto(Windows.Xbox.Media.GameTransportControlsButtonPressedEventArgs)]
     interface IGameTransportControlsButtonPressedEventArgs : IInspectable
